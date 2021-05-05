@@ -5,11 +5,22 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prepare": "husky install",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
+    "test": "",
+    "test:watch": "",
+    "pre-commit": "tsc && lint-staged && pretty-quick --staged",
+    "pre-push": "npm run lint && npm run test"
   },
   "prettier": {
     "semi": false,
     "printWidth": 100
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "next": "10.2.0",
@@ -28,7 +39,10 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
     "typescript": "^4.2.4"
   }
 }
