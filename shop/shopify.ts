@@ -7,12 +7,26 @@ const client = Client.buildClient({
   storefrontAccessToken: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN,
 })
 
-export type Product = Pick<ShopifyBuy.Product, "id" | "title" | "description">
+export type Product = {
+  id: string | number
+  title: string
+  description: string
+  price: number
+  image: string
+}
 
-export const toProduct = ({ id, title, description }: ShopifyBuy.Product): Product => ({
+export const toProduct = ({
+  id,
+  title,
+  // @ts-ignore
+  descriptionHtml: description,
+  ...product
+}: ShopifyBuy.Product): Product => ({
   id,
   title,
   description,
+  price: parseFloat(product.variants[0].price),
+  image: product.images[0].src,
 })
 
 export const getProducts = async () => {
