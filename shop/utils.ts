@@ -1,4 +1,1 @@
-export const currencyFormatter = new Intl.NumberFormat("en-CA", {
-  style: "currency",
-  currency: "CAD",
-})
+export const formatCurrency = (amount: number) => `$${amount.toFixed(2)}`
