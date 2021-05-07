@@ -48,6 +48,9 @@ export default function Shop({ products }: ShopProps) {
               ></div>
             </div>
           </div>
+          <span className="text-center w-1/5 font-semibold text-sm">
+            {formatCurrency(product.price)}
+          </span>
           <div className="flex justify-center w-1/5">
             <input
               className="mx-2 border text-center w-8"
@@ -57,9 +60,6 @@ export default function Shop({ products }: ShopProps) {
               onChange={(e) => setQuantity(parseInt(e.target.value))}
             />
           </div>
-          <span className="text-center w-1/5 font-semibold text-sm">
-            {formatCurrency(product.price)}
-          </span>
           <span className="text-center w-1/5 font-semibold text-sm">
             {formatCurrency(quantity * product.price)}
           </span>
