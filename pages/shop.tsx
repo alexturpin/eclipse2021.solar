@@ -1,7 +1,7 @@
 import { GetStaticProps } from "next"
 import Image from "next/image"
 import { useState } from "react"
-import { getProducts, Product } from "../shop/shopify"
+import { getProducts, Product, getCheckoutURL } from "../shop/shopify"
 import { formatCurrency } from "../shop/utils"
 
 type ShopProps = {
@@ -18,6 +18,13 @@ export const getStaticProps: GetStaticProps<ShopProps> = async (context) => {
 
 export default function Shop({ products }: ShopProps) {
   const [quantity, setQuantity] = useState(2)
+
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const checkout = async () => {
+    setCheckoutLoading(true)
+    const checkoutURL = await getCheckoutURL(products[0].id, quantity)
+    window.location = checkoutURL
+  }
 
   return (
     <div className="container mx-auto mt-10 shadow-md px-10 py-10 bg-white">
@@ -65,6 +72,16 @@ export default function Shop({ products }: ShopProps) {
           </span>
         </div>
       ))}
+
+      <div className="flex flex-row-reverse border-t pt-8">
+        <button
+          className="w-1/6 bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase"
+          onClick={checkout}
+          disabled={checkoutLoading}
+        >
+          Checkout
+        </button>
+      </div>
     </div>
   )
 }
