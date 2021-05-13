@@ -31,70 +31,101 @@ export default function Shop({ products }: ShopProps) {
   return (
     <>
       <header className="w-full gradient">
-        <div className="container mx-auto">
-          <div className="absolute left-1/2 transform -translate-x-1/2">
-            <Image src="/eclipse-clipped.png" alt="" width="782" height="285" />
+        <div className="h-eclipse md:h-eclipse-md relative overflow-hidden">
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-eclipse h-eclipse md:w-eclipse-md md:h-eclipse-md pointer-events-none">
+            <Image src="/eclipse.png" alt="" layout="fill" />
           </div>
-          <h1 className="font-semibold text-base uppercase w-44 text-center mx-auto relative z-10">
-            Solar Eclipse Glasses
-          </h1>
-          <h3 className="font-semibold text-yellow text-center mb-14 relative z-10">
-            June 10, 2021
-          </h3>
+        </div>
+        <div className="container mx-auto px-6">
+          <h1 className="hidden">Solar Eclipse Glasses</h1>
+          <h3 className="hidden">June 10, 2021</h3>
 
-          <p className="text-center mb-6">
+          <p className="text-center mb-6 text-sm leading-loose md:-mt-16 -mt-14">
             For those who have seen the Earth from space, and for the hundreds and perhaps thousands
             more who will, the experience most certainly changes your perspective. The things that
             we share in our world are far more valuable than those which divide us.
           </p>
-          <p className="text-center mb-14">
+          <p className="text-center mb-14 text-sm leading-loose">
             It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my
             thumb and shut one eye, and my thumb blotted out the planet Earth. I didn't feel like a
             giant. I felt very, very small.
           </p>
 
-          <h2 className="font-bold text-2xl text-yellow uppercase">Shop</h2>
+          <h2 className="font-extrabold text-2xl text-yellow uppercase pb-4">Shop</h2>
         </div>
       </header>
-      <div className="container mx-auto">
-        <div className="bg-purple p-2">
-          <div className="flex flex-row justify-between items-center">
-            <div className="w-1/4">
-              <Image
-                layout="responsive"
-                width="1000"
-                height="1000"
-                src={product.image}
-                alt={product.title}
-              />
+      <div className="container mx-auto px-6">
+        <div className="bg-purple px-5 py-5 rounded-md">
+          <div className="flex justify-between items-center flex-col md:flex-row md:pb-5">
+            <div className="w-full md:w-1/4 pb-5 md:pb-0">
+              <div className="bg-white rounded-md py-5 md:px-5">
+                <div className="w-1/2 md:w-full mx-auto">
+                  <Image
+                    layout="responsive"
+                    width="862"
+                    height="511"
+                    src={product.image}
+                    alt={product.title}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="w-1/2">
-              <span className="font-bold text-sm mb-5">{product.title}</span>
+            <div className="w-full md:w-1/2 pb-5 md:pb-0">
+              <span className="font-extrabold uppercase md:text-sm mb-5">{product.title}</span>
               <div
                 className="description-html text-sm"
                 dangerouslySetInnerHTML={{ __html: product.description }}
               ></div>
             </div>
-            <div className="">
-              <span className="text-center text-yellow font-semibold text-sm">
+            <div className="pb-5 md:pb-0 md:py-0">
+              <span className="text-center text-yellow font-bold text-2xl md:text-sm">
                 {formatCurrency(product.price)}
               </span>
             </div>
-            <div className="">
-              <input
-                className="mx-2 border text-center w-8"
-                type="number"
-                min="2"
-                value={quantity}
-                onChange={(e) => setQuantity(parseInt(e.target.value))}
-              />
+            <div className="pb-5 md:pb-0">
+              <div className="flex flex-row md:flex-col-reverse bg-white rounded-md">
+                <button className="text-gray text-2xl px-5 py-1 md:px-4 md:py-4 font-bold">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+                <input
+                  className="mx-2 md:mx-auto text-center text-black font-extrabold w-8 border-0"
+                  type="text"
+                  value={quantity}
+                  onChange={(e) => setQuantity(parseInt(e.target.value))}
+                />
+                <button className="text-black text-2xl px-5 py-3 md:px-4 md:py-4 font-bold">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-between border-t mt-4 pt-2">
+          <div className="flex justify-between border-t pt-2">
             <span className="uppercase font-semibold">Subtotal</span>
 
-            <span className="text-yellow font-semibold">
+            <span className="text-yellow font-bold">
               {formatCurrency(quantity * product.price)}
             </span>
           </div>
@@ -102,7 +133,7 @@ export default function Shop({ products }: ShopProps) {
 
         <div className="flex flex-row-reverse">
           <button
-            className="w-1/4 py-2 mt-4 rounded-lg text-sm text-white uppercase bg-gradient-to-r from-orange to-mangenta"
+            className="w-full md:w-auto py-4 px-14 mt-4 rounded-md text-xs text-white uppercase bg-gradient-to-r from-orange to-mangenta tracking-widest"
             onClick={checkout}
             disabled={checkoutLoading}
           >
