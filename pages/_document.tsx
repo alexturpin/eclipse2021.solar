@@ -19,8 +19,16 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
 
+          <meta
+            name="description"
+            content="Find out how you can watch the solar eclipse happening on June 10, 2021, visible from most of Eastern Canada!"
+          />
+
           <meta property="og:title" content="June 10, 2021 solar eclipse" />
-          <meta property="og:description" content="Solar eclipse visible from Eastern Canada" />
+          <meta
+            property="og:description"
+            content="Find out how you can watch the solar eclipse happening on June 10, 2021, visible from most of Eastern Canada!"
+          />
           <meta property="og:image" content={process.env.VERCEL_URL + "/eclipse.png"} />
           <meta property="og:url" content={process.env.VERCEL_URL} />
           <meta name="twitter:card" content="summary_large_image" />
