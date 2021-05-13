@@ -47,14 +47,16 @@ export default function Shop({ products }: ShopProps) {
           <h3 className="hidden">June 10, 2021</h3>
 
           <p className="text-center mb-6 text-sm leading-loose md:-mt-16 -mt-14">
-            For those who have seen the Earth from space, and for the hundreds and perhaps thousands
-            more who will, the experience most certainly changes your perspective. The things that
-            we share in our world are far more valuable than those which divide us.
+            Do not miss this astronomical experience!
           </p>
           <p className="text-center mb-14 text-sm leading-loose">
-            It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my
-            thumb and shut one eye, and my thumb blotted out the planet Earth. I didn't feel like a
-            giant. I felt very, very small.
+            On June 10, you will have the chance to witness a solar eclipse, an event that rarely
+            occurs in the same place.
+          </p>
+          <p className="text-center mb-14 text-sm leading-loose">
+            Get our glasses specially designed to admire the transition of the Moon between the Sun
+            and the Earth. Our glasses are compliant with the ISO 12312-2 international safety
+            standard for safely viewing our local star in all its splendor.
           </p>
 
           <h2 className="font-extrabold text-2xl text-yellow uppercase pb-4">Shop</h2>
