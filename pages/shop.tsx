@@ -49,7 +49,7 @@ export default function Shop({ products }: ShopProps) {
           <p className="text-center mb-6 text-sm leading-loose md:-mt-16 -mt-14">
             Do not miss this astronomical experience!
           </p>
-          <p className="text-center mb-14 text-sm leading-loose">
+          <p className="text-center mb-6 text-sm leading-loose">
             On June 10, you will have the chance to witness a solar eclipse, an event that rarely
             occurs in the same place.
           </p>
