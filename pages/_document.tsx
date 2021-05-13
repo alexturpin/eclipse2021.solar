@@ -11,11 +11,19 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <title>June 10, 2021 solar eclipse</title>
+
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap"
             rel="stylesheet"
           />
+
+          <meta property="og:title" content="June 10, 2021 solar eclipse" />
+          <meta property="og:description" content="Solar eclipse visible from Eastern Canada" />
+          <meta property="og:image" content={process.env.VERCEL_URL + "/eclipse.png"} />
+          <meta property="og:url" content={process.env.VERCEL_URL} />
+          <meta name="twitter:card" content="summary_large_image" />
         </Head>
         <body>
           <Main />
