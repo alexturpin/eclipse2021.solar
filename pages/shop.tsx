@@ -4,6 +4,9 @@ import { useState } from "react"
 import { getProducts, Product, getCheckoutURL } from "../shop/shopify"
 import { formatCurrency } from "../shop/utils"
 
+const MIN_ITEMS = 2
+const MAX_ITEMS = 10
+
 type ShopProps = {
   products: Product[]
 }
@@ -22,7 +25,10 @@ export default function Shop({ products }: ShopProps) {
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const checkout = async () => {
     setCheckoutLoading(true)
-    const checkoutURL = await getCheckoutURL(products[0].id, quantity)
+    const checkoutURL = await getCheckoutURL(
+      products[0].id,
+      Math.min(Math.max(quantity, MIN_ITEMS), MAX_ITEMS)
+    )
     window.location = checkoutURL
   }
 
@@ -31,8 +37,8 @@ export default function Shop({ products }: ShopProps) {
   return (
     <>
       <header className="w-full gradient">
-        <div className="h-eclipse md:h-eclipse-md relative overflow-hidden">
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-eclipse h-eclipse md:w-eclipse-md md:h-eclipse-md pointer-events-none">
+        <div className="h-eclipse md:h-eclipse-md relative overflow-hidden pointer-events-none">
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-eclipse h-eclipse md:w-eclipse-md md:h-eclipse-md">
             <Image src="/eclipse.png" alt="" layout="fill" />
           </div>
         </div>
@@ -83,8 +89,15 @@ export default function Shop({ products }: ShopProps) {
               </span>
             </div>
             <div className="pb-5 md:pb-0">
-              <div className="flex flex-row md:flex-col-reverse bg-white rounded-md">
-                <button className="text-gray text-2xl px-5 py-1 md:px-4 md:py-4 font-bold">
+              <div className="flex flex-row md:flex-col-reverse bg-white rounded-md items-center">
+                <button
+                  className={
+                    (quantity > MIN_ITEMS ? "text-black" : "text-gray") +
+                    " text-2xl px-5 py-1 md:px-4 md:py-4 font-bold"
+                  }
+                  disabled={quantity <= MIN_ITEMS}
+                  onClick={() => setQuantity(Math.max(quantity - 1, MIN_ITEMS))}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -98,13 +111,17 @@ export default function Shop({ products }: ShopProps) {
                     />
                   </svg>
                 </button>
-                <input
-                  className="mx-2 md:mx-auto text-center text-black font-extrabold w-8 border-0"
-                  type="text"
-                  value={quantity}
-                  onChange={(e) => setQuantity(parseInt(e.target.value))}
-                />
-                <button className="text-black text-2xl px-5 py-3 md:px-4 md:py-4 font-bold">
+                <div className="mx-2 md:mx-auto text-center text-black font-extrabold w-8 border-0">
+                  {quantity}
+                </div>
+                <button
+                  className={
+                    (quantity < MAX_ITEMS ? "text-black" : "text-gray") +
+                    " text-black text-2xl px-5 py-3 md:px-4 md:py-4 font-bold"
+                  }
+                  disabled={quantity >= MAX_ITEMS}
+                  onClick={() => setQuantity(Math.min(quantity + 1, MAX_ITEMS))}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
