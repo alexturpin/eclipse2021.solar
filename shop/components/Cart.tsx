@@ -3,6 +3,7 @@ import { useState } from "react"
 import { formatCurrency } from "../utils"
 import { getCheckoutURL, Product } from "../shopify"
 import { Quantity } from "./Quantity"
+import { Checkout } from "./Checkout"
 
 const MIN_ITEMS = 2
 const MAX_ITEMS = 10
@@ -71,13 +72,7 @@ export const Cart = ({ product }: CartProps) => {
       </div>
 
       <div className="flex flex-row-reverse">
-        <button
-          className="w-full md:w-auto py-4 px-14 mt-4 rounded-md text-xs text-white uppercase bg-gradient-to-r from-orange to-mangenta tracking-widest"
-          onClick={checkout}
-          disabled={checkoutLoading}
-        >
-          Checkout
-        </button>
+        <Checkout onCheckout={checkout} loading={checkoutLoading} />
       </div>
     </div>
   )
