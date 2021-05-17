@@ -2,6 +2,7 @@ import type { AppProps } from "next/app"
 import Head from "next/head"
 import "tailwindcss/tailwind.css"
 import "../styles/globals.css"
+import { appWithTranslation } from "next-i18next"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -34,4 +35,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   )
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

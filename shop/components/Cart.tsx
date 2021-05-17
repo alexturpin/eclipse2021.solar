@@ -4,6 +4,7 @@ import { formatCurrency } from "../utils"
 import { getCheckoutURL, Product } from "../shopify"
 import { Quantity } from "./Quantity"
 import { Checkout } from "./Checkout"
+import { useTranslation } from "next-i18next"
 
 const MIN_ITEMS = 2
 const MAX_ITEMS = 10
@@ -24,6 +25,8 @@ export const Cart = ({ product }: CartProps) => {
     )
     window.location = checkoutURL
   }
+
+  const { t } = useTranslation()
 
   return (
     <div className="container mx-auto px-6">
@@ -65,7 +68,7 @@ export const Cart = ({ product }: CartProps) => {
         </div>
 
         <div className="flex justify-between border-t pt-2">
-          <span className="uppercase font-semibold">Subtotal</span>
+          <span className="uppercase font-semibold">{t("subtotal")}</span>
 
           <span className="text-yellow font-bold">{formatCurrency(quantity * product.price)}</span>
         </div>
