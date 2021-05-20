@@ -1,1 +1,6 @@
-export const formatCurrency = (amount: number) => `$${amount.toFixed(2)}`
+export const formatCurrency = (value: number, locale: string) =>
+  value.toLocaleString(locale, {
+    style: "currency",
+    currency: "CAD",
+    currencyDisplay: "narrowSymbol",
+  })

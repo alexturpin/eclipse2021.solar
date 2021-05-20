@@ -26,7 +26,7 @@ export const Cart = ({ product }: CartProps) => {
     window.location = checkoutURL
   }
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   return (
     <div className="container mx-auto px-6">
@@ -54,7 +54,7 @@ export const Cart = ({ product }: CartProps) => {
           </div>
           <div className="pb-5 md:pb-0 md:py-0">
             <span className="text-center text-yellow font-bold text-2xl md:text-sm">
-              {formatCurrency(product.price)}
+              {formatCurrency(product.price, i18n.language)}
             </span>
           </div>
           <div className="pb-5 md:pb-0">
@@ -70,7 +70,9 @@ export const Cart = ({ product }: CartProps) => {
         <div className="flex justify-between border-t pt-2">
           <span className="uppercase font-semibold">{t("subtotal")}</span>
 
-          <span className="text-yellow font-bold">{formatCurrency(quantity * product.price)}</span>
+          <span className="text-yellow font-bold">
+            {formatCurrency(quantity * product.price, i18n.language)}
+          </span>
         </div>
       </div>
 
