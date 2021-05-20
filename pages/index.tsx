@@ -17,7 +17,7 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ locale }) => {
   }
 }
 
-export default function Shop({ products }: ShopProps) {
+const Shop = ({ products }: ShopProps) => {
   return (
     <>
       <Header />
@@ -25,3 +25,5 @@ export default function Shop({ products }: ShopProps) {
     </>
   )
 }
+
+export default Shop
