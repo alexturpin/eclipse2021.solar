@@ -2,13 +2,13 @@ import { useTranslation } from "next-i18next"
 import Image from "next/image"
 
 export const Header = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   return (
     <header className="w-full gradient">
       <div className="h-eclipse md:h-eclipse-md relative overflow-hidden pointer-events-none">
         <div className="absolute left-1/2 transform -translate-x-1/2 w-eclipse h-eclipse md:w-eclipse-md md:h-eclipse-md">
-          <Image src="/eclipse.png" alt="" layout="fill" />
+          <Image src={`/images/${i18n.language}/eclipse.png`} alt="" layout="fill" />
         </div>
       </div>
       <div className="container mx-auto px-6">
