@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { useState } from "react"
-import { formatCurrency } from "../utils"
+import { formatCurrency, Locale } from "../utils"
 import { getCheckoutURL, Product } from "../shopify"
 import { Quantity } from "./Quantity"
 import { Checkout } from "./Checkout"
@@ -14,6 +14,8 @@ type CartProps = {
 }
 
 export const Cart = ({ product }: CartProps) => {
+  const { t, i18n } = useTranslation()
+
   const [quantity, setQuantity] = useState(2)
 
   const [checkoutLoading, setCheckoutLoading] = useState(false)
@@ -21,12 +23,11 @@ export const Cart = ({ product }: CartProps) => {
     setCheckoutLoading(true)
     const checkoutURL = await getCheckoutURL(
       product.id,
-      Math.min(Math.max(quantity, MIN_ITEMS), MAX_ITEMS)
+      Math.min(Math.max(quantity, MIN_ITEMS), MAX_ITEMS),
+      i18n.language as Locale
     )
     window.location = checkoutURL
   }
-
-  const { t, i18n } = useTranslation()
 
   return (
     <div className="container mx-auto px-6">

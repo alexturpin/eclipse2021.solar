@@ -4,3 +4,5 @@ export const formatCurrency = (value: number, locale: string) =>
     currency: "CAD",
     currencyDisplay: "narrowSymbol",
   })
+
+export type Locale = "en-CA" | "fr-CA"

@@ -1,11 +1,21 @@
 import Client from "shopify-buy"
+import { Locale } from "./utils"
 
-const client = Client.buildClient({
-  // @ts-expect-error
-  domain: process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN,
-  // @ts-expect-error
-  storefrontAccessToken: process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
-})
+const clients = {
+  "en-CA": Client.buildClient({
+    // @ts-expect-error
+    domain: process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN,
+    // @ts-expect-error
+    storefrontAccessToken: process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+  }),
+  "fr-CA": Client.buildClient({
+    // @ts-expect-error
+    domain: process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN,
+    // @ts-expect-error
+    storefrontAccessToken: process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+    language: "fr-CA",
+  }),
+}
 
 export type Product = {
   id: string | number
@@ -29,13 +39,16 @@ export const toProduct = ({
   image: product.images[0].src,
 })
 
-export const getProducts = async () => {
-  return (await client.product.fetchAll()).map(toProduct)
-}
+export const getProducts = async (locale: Locale) =>
+  (await clients[locale].product.fetchAll()).map(toProduct)
 
-export const getCheckoutURL = async (variantId: string | number, quantity: number) => {
-  const checkout = await client.checkout.create()
-  await client.checkout.addLineItems(checkout.id, [
+export const getCheckoutURL = async (
+  variantId: string | number,
+  quantity: number,
+  locale: Locale
+) => {
+  const checkout = await clients[locale].checkout.create()
+  await clients[locale].checkout.addLineItems(checkout.id, [
     {
       variantId,
       quantity,
