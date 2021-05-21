@@ -100,9 +100,6 @@ var mid = []
 var c3 = []
 var c4 = []
 
-var currenttimeperiod = ""
-var loadedtimeperiods = []
-
 //
 // Populate the circumstances array with the time-only dependent circumstances (x, y, d, m, ...)
 function timedependent(elements, circumstances) {
@@ -154,14 +151,14 @@ function timedependent(elements, circumstances) {
   circumstances[13] = ans
   // Calculate l1 and dl1
   type = circumstances[0]
-  if (type == -2 || type == 0 || type == 2) {
+  if (type === -2 || type === 0 || type === 2) {
     ans = elements[22 + index] * t + elements[21 + index]
     ans = ans * t + elements[20 + index]
     circumstances[8] = ans
     circumstances[14] = 2.0 * elements[22 + index] * t + elements[21 + index]
   }
   // Calculate l2 and dl2
-  if (type == -1 || type == 0 || type == 1) {
+  if (type === -1 || type === 0 || type === 1) {
     ans = elements[25 + index] * t + elements[24 + index]
     ans = ans * t + elements[23 + index]
     circumstances[9] = ans
@@ -173,7 +170,7 @@ function timedependent(elements, circumstances) {
 //
 // Populate the circumstances array with the time and location dependent circumstances
 function timelocdependent(elements, circumstances) {
-  var ans, index, type
+  var index, type
 
   timedependent(elements, circumstances)
   index = obsvconst[6]
@@ -204,11 +201,11 @@ function timelocdependent(elements, circumstances) {
   circumstances[27] = circumstances[11] - circumstances[23]
   // Calculate l1'
   type = circumstances[0]
-  if (type == -2 || type == 0 || type == 2) {
+  if (type === -2 || type === 0 || type === 2) {
     circumstances[28] = circumstances[8] - circumstances[21] * elements[26 + index]
   }
   // Calculate l2'
-  if (type == -1 || type == 0 || type == 1) {
+  if (type === -1 || type === 0 || type === 1) {
     circumstances[29] = circumstances[9] - circumstances[21] * elements[27 + index]
   }
   // Calculate n^2
@@ -330,10 +327,10 @@ function observational(circumstances) {
   // We are looking at an "external" contact UNLESS this is a total eclipse AND we are looking at
   // c2 or c3, in which case it is an INTERNAL contact! Note that if we are looking at mid eclipse,
   // then we may not have determined the type of eclipse (mid[39]) just yet!
-  if (circumstances[0] == 0) {
+  if (circumstances[0] === 0) {
     contacttype = 1.0
   } else {
-    if (mid[39] == 3 && (circumstances[0] == -1 || circumstances[0] == 1)) {
+    if (mid[39] === 3 && (circumstances[0] === -1 || circumstances[0] === 1)) {
       contacttype = -1.0
     } else {
       contacttype = 1.0
@@ -404,7 +401,7 @@ function getsunriset(elements, circumstances, riset) {
   iter = 0
   while (diff > 0.00001 || diff < -0.00001) {
     iter++
-    if (iter == 4) return
+    if (iter === 4) return
     h0 = Math.acos(
       (Math.sin(-0.00524) - Math.sin(obsvconst[0]) * circumstances[5]) /
         Math.cos(obsvconst[0]) /
@@ -464,65 +461,65 @@ function getall(elements) {
       c3[36] = 999.9
       // Calculate how much of the eclipse is above the horizon
       pattern = 0
-      if (c1[40] == 0) {
+      if (c1[40] === 0) {
         pattern += 10000
       }
-      if (c2[40] == 0) {
+      if (c2[40] === 0) {
         pattern += 1000
       }
-      if (mid[40] == 0) {
+      if (mid[40] === 0) {
         pattern += 100
       }
-      if (c3[40] == 0) {
+      if (c3[40] === 0) {
         pattern += 10
       }
-      if (c4[40] == 0) {
+      if (c4[40] === 0) {
         pattern += 1
       }
       // Now, time to make sure that all my observational[39] and observational[40] are OK
-      if (pattern == 11110) {
+      if (pattern === 11110) {
         getsunset(elements, c4)
         observational(c4)
         c4[40] = 3
-      } else if (pattern == 11100) {
+      } else if (pattern === 11100) {
         getsunset(elements, c3)
         observational(c3)
         c3[40] = 3
         copycircumstances(c3, c4)
-      } else if (pattern == 11000) {
+      } else if (pattern === 11000) {
         c3[40] = 4
         getsunset(elements, mid)
         midobservational()
         mid[40] = 3
         copycircumstances(mid, c4)
-      } else if (pattern == 10000) {
+      } else if (pattern === 10000) {
         mid[39] = 1
         getsunset(elements, mid)
         midobservational()
         mid[40] = 3
         copycircumstances(mid, c4)
-      } else if (pattern == 1111) {
+      } else if (pattern === 1111) {
         getsunrise(elements, c1)
         observational(c1)
         c1[40] = 2
-      } else if (pattern == 111) {
+      } else if (pattern === 111) {
         getsunrise(elements, c2)
         observational(c2)
         c2[40] = 2
         copycircumstances(c2, c1)
-      } else if (pattern == 11) {
+      } else if (pattern === 11) {
         c2[40] = 4
         getsunrise(elements, mid)
         midobservational()
         mid[40] = 2
         copycircumstances(mid, c1)
-      } else if (pattern == 1) {
+      } else if (pattern === 1) {
         mid[39] = 1
         getsunrise(elements, mid)
         midobservational()
         mid[40] = 2
         copycircumstances(mid, c1)
-      } else if (pattern == 0) {
+      } else if (pattern === 0) {
         mid[39] = 0
       }
       // There are other patterns, but those are the only ones we're covering!
@@ -531,34 +528,34 @@ function getall(elements) {
       pattern = 0
       observational(c1)
       observational(c4)
-      if (c1[40] == 0) {
+      if (c1[40] === 0) {
         pattern += 100
       }
-      if (mid[40] == 0) {
+      if (mid[40] === 0) {
         pattern += 10
       }
-      if (c4[40] == 0) {
+      if (c4[40] === 0) {
         pattern += 1
       }
-      if (pattern == 110) {
+      if (pattern === 110) {
         getsunset(elements, c4)
         observational(c4)
         c4[40] = 3
-      } else if (pattern == 100) {
+      } else if (pattern === 100) {
         getsunset(elements, mid)
         midobservational()
         mid[40] = 3
         copycircumstances(mid, c4)
-      } else if (pattern == 11) {
+      } else if (pattern === 11) {
         getsunrise(elements, c1)
         observational(c1)
         c1[40] = 2
-      } else if (pattern == 1) {
+      } else if (pattern === 1) {
         getsunrise(elements, mid)
         midobservational()
         mid[40] = 2
         copycircumstances(mid, c1)
-      } else if (pattern == 0) {
+      } else if (pattern === 0) {
         mid[39] = 0
       }
       // There are other patterns, but those are the only ones we're covering!
@@ -567,7 +564,7 @@ function getall(elements) {
     mid[39] = 0 // No eclipse
   }
   // Magnitude for total and annular eclipse is moon/sun ratio
-  if (mid[39] == 2 || mid[39] == 3) {
+  if (mid[39] === 2 || mid[39] === 3) {
     mid[37] = mid[38]
   }
 }
@@ -578,13 +575,13 @@ function readform() {
   var tmp
 
   // Make sure that we have something to parse from the form
-  if (document.eclipseform.latd.value == "") document.eclipseform.latd.value = "0"
-  if (document.eclipseform.latm.value == "") document.eclipseform.latm.value = "0"
-  if (document.eclipseform.lats.value == "") document.eclipseform.lats.value = "0"
-  if (document.eclipseform.lond.value == "") document.eclipseform.lond.value = "0"
-  if (document.eclipseform.lonm.value == "") document.eclipseform.lonm.value = "0"
-  if (document.eclipseform.lons.value == "") document.eclipseform.lons.value = "0"
-  if (document.eclipseform.alt.value == "") document.eclipseform.alt.value = "0"
+  if (document.eclipseform.latd.value === "") document.eclipseform.latd.value = "0"
+  if (document.eclipseform.latm.value === "") document.eclipseform.latm.value = "0"
+  if (document.eclipseform.lats.value === "") document.eclipseform.lats.value = "0"
+  if (document.eclipseform.lond.value === "") document.eclipseform.lond.value = "0"
+  if (document.eclipseform.lonm.value === "") document.eclipseform.lonm.value = "0"
+  if (document.eclipseform.lons.value === "") document.eclipseform.lons.value = "0"
+  if (document.eclipseform.alt.value === "") document.eclipseform.alt.value = "0"
 
   // Write back to the form what we are parsing
   document.eclipseform.latd.value = Math.abs(parseFloat(document.eclipseform.latd.value))
@@ -715,16 +712,16 @@ function gettime(elements, circumstances) {
     }
     ans = ans + Math.floor(t)
   }
-  if (circumstances[40] == 1) {
+  if (circumstances[40] === 1) {
     html = document.createElement("font")
     html.setAttribute("color", "#808080")
     ital = document.createElement("i")
     ital.appendChild(document.createTextNode(ans))
     html.appendChild(ital)
     return html
-  } else if (circumstances[40] == 2) {
+  } else if (circumstances[40] === 2) {
     return document.createTextNode(ans + "(r)")
-  } else if (circumstances[40] == 3) {
+  } else if (circumstances[40] === 3) {
     return document.createTextNode(ans + "(s)")
   } else {
     return document.createTextNode(ans)
@@ -736,10 +733,10 @@ function gettime(elements, circumstances) {
 function getalt(circumstances) {
   var t, ans
 
-  if (circumstances[40] == 2) {
+  if (circumstances[40] === 2) {
     return document.createTextNode("0(r)")
   }
-  if (circumstances[40] == 3) {
+  if (circumstances[40] === 3) {
     return document.createTextNode("0(s)")
   }
   if (circumstances[32] < 0.0 && circumstances[32] >= -0.00524) {
@@ -759,7 +756,7 @@ function getalt(circumstances) {
     ans = ans + "0"
   }
   ans = ans + t
-  if (circumstances[40] == 1) {
+  if (circumstances[40] === 1) {
     html = document.createElement("font")
     html.setAttribute("color", "#808080")
     ital = document.createElement("i")
@@ -792,7 +789,7 @@ function getazi(circumstances) {
     ans = ans + "0"
   }
   ans = ans + t
-  if (circumstances[40] == 1) {
+  if (circumstances[40] === 1) {
     html = document.createElement("font")
     html.setAttribute("color", "#808080")
     ital = document.createElement("i")
@@ -811,9 +808,9 @@ function getazi(circumstances) {
 function getduration() {
   var tmp, ans
 
-  if (c3[40] == 4) {
+  if (c3[40] === 4) {
     tmp = mid[1] - c2[1]
-  } else if (c2[40] == 4) {
+  } else if (c2[40] === 4) {
     tmp = c3[1] - mid[1]
   } else {
     tmp = c3[1] - c2[1]
@@ -839,7 +836,7 @@ function getmagnitude() {
   var a
 
   a = Math.floor(1000.0 * mid[37] + 0.5) / 1000.0
-  if (mid[40] == 1) {
+  if (mid[40] === 1) {
     html = document.createElement("font")
     html.setAttribute("color", "#808080")
     ital = document.createElement("i")
@@ -847,10 +844,10 @@ function getmagnitude() {
     html.appendChild(ital)
     return html
   }
-  if (mid[40] == 2) {
+  if (mid[40] === 2) {
     a = a + "(r)"
   }
-  if (mid[40] == 3) {
+  if (mid[40] === 3) {
     a = a + "(s)"
   }
   return document.createTextNode(a)
@@ -866,7 +863,7 @@ function getcoverage() {
   } else if (mid[37] >= 1.0) {
     a = "1.000"
   } else {
-    if (mid[39] == 2) {
+    if (mid[39] === 2) {
       c = mid[38] * mid[38]
     } else {
       c = Math.acos(
@@ -879,7 +876,7 @@ function getcoverage() {
     }
     a = Math.floor(1000.0 * c + 0.5) / 1000.0
   }
-  if (mid[40] == 1) {
+  if (mid[40] === 1) {
     html = document.createElement("font")
     html.setAttribute("color", "#808080")
     ital = document.createElement("i")
@@ -887,10 +884,10 @@ function getcoverage() {
     html.appendChild(ital)
     return html
   }
-  if (mid[40] == 2) {
+  if (mid[40] === 2) {
     a = a + "(r)"
   }
-  if (mid[40] == 3) {
+  if (mid[40] === 3) {
     a = a + "(s)"
   }
   return document.createTextNode(a)
@@ -1054,9 +1051,9 @@ function calculatefor(el) {
       row.appendChild(td)
       td = document.createElement("td")
       td.setAttribute("align", "center")
-      if (mid[39] == 1) {
+      if (mid[39] === 1) {
         val = document.createTextNode("P")
-      } else if (mid[39] == 2) {
+      } else if (mid[39] === 2) {
         val = document.createTextNode("A")
       } else {
         val = document.createTextNode("T")
@@ -1064,7 +1061,7 @@ function calculatefor(el) {
       td.appendChild(val)
       row.appendChild(td)
       // Partial eclipse start
-      if (c1[40] == 4) {
+      if (c1[40] === 4) {
         td = document.createElement("td")
         td.setAttribute("align", "center")
         td.appendChild(document.createTextNode("-"))
@@ -1086,7 +1083,7 @@ function calculatefor(el) {
       }
       // Central eclipse time
       td = document.createElement("td")
-      if (mid[39] > 1 && c2[40] != 4) {
+      if (mid[39] > 1 && c2[40] !== 4) {
         td.setAttribute("nowrap", "")
         td.appendChild(gettime(el, c2))
       } else {
@@ -1111,7 +1108,7 @@ function calculatefor(el) {
       row.appendChild(td)
       // Central eclipse ends
       td = document.createElement("td")
-      if (mid[39] > 1 && c3[40] != 4) {
+      if (mid[39] > 1 && c3[40] !== 4) {
         td.setAttribute("nowrap", "")
         td.appendChild(gettime(el, c3))
       } else {
@@ -1120,7 +1117,7 @@ function calculatefor(el) {
       }
       row.appendChild(td)
       // Partial eclipse ends
-      if (c4[40] == 4) {
+      if (c4[40] === 4) {
         td = document.createElement("td")
         td.setAttribute("align", "center")
         td.appendChild(document.createTextNode("-"))
@@ -1165,111 +1162,4 @@ function calculatefor(el) {
   }
   resultsTable.appendChild(tbody)
   results.appendChild(resultsTable)
-}
-
-function init() {
-  opt = document.getElementById("el_cities")
-  for (i = 0; i < cities.length; i += 9) {
-    const name = String(cities[i])
-    if (name.indexOf("--", 0) == 0) {
-      group = document.createElement("optgroup")
-      group.setAttribute("label", name.substring(2))
-      opt.appendChild(group)
-      i++
-    }
-    city = document.createElement("option")
-    city.setAttribute("value", i)
-    cityName = document.createTextNode(cities[i])
-    city.appendChild(cityName)
-    opt.appendChild(city)
-  }
-}
-
-function citychange() {
-  clearoldresults()
-  index = Number(document.eclipseform.cityndx.value)
-  if (index <= 0) return
-  hemisphere = 0
-  document.eclipseform.loc_name.value = cities[index++]
-  val = cities[index++]
-  if (val < 0) {
-    val = -val
-    hemisphere = 1
-  }
-  document.eclipseform.latd.value = val
-  val = cities[index++]
-  if (val < 0) {
-    val = -val
-    hemisphere = 1
-  }
-  document.eclipseform.latm.value = val
-  val = cities[index++]
-  if (val < 0) {
-    val = -val
-    hemisphere = 1
-  }
-  document.eclipseform.lats.value = val
-  document.eclipseform.latx.selectedIndex = hemisphere
-  hemisphere = 0
-  val = cities[index++]
-  if (val < 0) {
-    val = -val
-    hemisphere = 1
-  }
-  document.eclipseform.lond.value = val
-  val = cities[index++]
-  if (val < 0) {
-    val = -val
-    hemisphere = 1
-  }
-  document.eclipseform.lonm.value = val
-  val = cities[index++]
-  if (val < 0) {
-    val = -val
-    hemisphere = 1
-  }
-  document.eclipseform.lons.value = val
-  document.eclipseform.lonx.selectedIndex = hemisphere
-  document.eclipseform.alt.value = cities[index++]
-  val = cities[index]
-  if (val < 0) {
-    document.eclipseform.tzx.selectedIndex = 1
-    val = -val
-  } else {
-    document.eclipseform.tzx.selectedIndex = 0
-  }
-  document.eclipseform.tzh.selectedIndex = Math.floor(val)
-  document.eclipseform.tzm.selectedIndex = Math.floor(
-    4 * (val - document.eclipseform.tzh.selectedIndex) + 0.5
-  )
-}
-
-function newloc() {
-  document.eclipseform.cityndx.selectedIndex = 0
-  clearoldresults()
-}
-
-function settimeperiod(timeperiod) {
-  for (i = 0; i < loadedtimeperiods.length; i++) {
-    if (loadedtimeperiods[i] == timeperiod) {
-      if (eval("self." + timeperiod)) {
-        currenttimeperiod = timeperiod
-        eval(timeperiod + "()")
-      }
-      return
-    }
-  }
-  currenttimeperiod = timeperiod
-  loadedtimeperiods.push(timeperiod)
-  head = document.getElementsByTagName("head")[0]
-  script = document.createElement("script")
-  script.setAttribute("language", "JavaScript")
-  script.setAttribute("src", timeperiod + ".js")
-  script.type = "text/javascript"
-  script.defer = false
-  head.appendChild(script)
-}
-
-function recalculate() {
-  eval(currenttimeperiod + "()")
 }
