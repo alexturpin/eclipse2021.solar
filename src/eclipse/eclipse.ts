@@ -1,6 +1,32 @@
-// @ts-nocheck
+export type Observer = {
+  latitude: {
+    degrees: number
+    minutes: number
+    seconds: number
+    direction: "N" | "S"
+  }
+  longitude: {
+    degrees: number
+    minutes: number
+    seconds: number
+    direction: "W" | "E"
+  }
+  alt: number
+  timezone: {
+    hours: number
+    minutes: number
+    direction: "W" | "E"
+  }
+}
 
-export const getEclipseDetails = (eclipse, observer) => {}
+const directions = {
+  N: 1,
+  S: -1,
+  W: 1,
+  E: -1,
+}
+
+export const getEclipseDetails = (eclipse: any, observer: Observer) => {}
 
 // Javascript Solar Eclipse Explorer
 //
@@ -40,7 +66,7 @@ GNU General Public License for more details.
 // Note that correcting for refraction will involve creating a "virtual" altitude
 // for each contact, and hence a different value of rho and O' for each contact!
 //
-var obsvconst = []
+var obsvconst: number[] = []
 
 //
 // Eclipse circumstances
@@ -94,15 +120,15 @@ var obsvconst = []
 
 var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-var c1 = []
-var c2 = []
-var mid = []
-var c3 = []
-var c4 = []
+var c1: number[] = []
+var c2: number[] = []
+var mid: number[] = []
+var c3: number[] = []
+var c4: number[] = []
 
 //
 // Populate the circumstances array with the time-only dependent circumstances (x, y, d, m, ...)
-function timedependent(elements, circumstances) {
+function timedependent(elements: any, circumstances: any) {
   var type, index, t, ans
 
   t = circumstances[1]
@@ -169,7 +195,7 @@ function timedependent(elements, circumstances) {
 
 //
 // Populate the circumstances array with the time and location dependent circumstances
-function timelocdependent(elements, circumstances) {
+function timelocdependent(elements: any, circumstances: any) {
   var index, type
 
   timedependent(elements, circumstances)
@@ -215,7 +241,7 @@ function timelocdependent(elements, circumstances) {
 
 //
 // Iterate on C1 or C4
-function c1c4iterate(elements, circumstances) {
+function c1c4iterate(elements: any, circumstances: any) {
   var sign, iter, tmp, n
 
   timelocdependent(elements, circumstances)
@@ -247,7 +273,7 @@ function c1c4iterate(elements, circumstances) {
 //   Entry conditions -
 //   1. The mid array must be populated
 //   2. The magnitude at mid eclipse must be > 0.0
-function getc1c4(elements) {
+function getc1c4(elements: any) {
   var tmp, n
 
   n = Math.sqrt(mid[30])
@@ -264,7 +290,7 @@ function getc1c4(elements) {
 
 //
 // Iterate on C2 or C3
-function c2c3iterate(elements, circumstances) {
+function c2c3iterate(elements: any, circumstances: any) {
   var sign, iter, tmp, n
 
   timelocdependent(elements, circumstances)
@@ -299,7 +325,7 @@ function c2c3iterate(elements, circumstances) {
 //   Entry conditions -
 //   1. The mid array must be populated
 //   2. There must be either a total or annular eclipse at the location!
-function getc2c3(elements) {
+function getc2c3(elements: any) {
   var tmp, n
 
   n = Math.sqrt(mid[30])
@@ -321,7 +347,7 @@ function getc2c3(elements) {
 
 //
 // Get the observational circumstances
-function observational(circumstances) {
+function observational(circumstances: any) {
   var contacttype, coslat, sinlat
 
   // We are looking at an "external" contact UNLESS this is a total eclipse AND we are looking at
@@ -376,7 +402,7 @@ function midobservational() {
 
 //
 // Calculate mid eclipse
-function getmid(elements) {
+function getmid(elements: any) {
   var iter, tmp
 
   mid[0] = 0
@@ -394,7 +420,7 @@ function getmid(elements) {
 
 //
 // Calculate the time of sunrise or sunset
-function getsunriset(elements, circumstances, riset) {
+function getsunriset(elements: any, circumstances: any, riset: number) {
   var h0, diff, iter
 
   diff = 1.0
@@ -417,19 +443,19 @@ function getsunriset(elements, circumstances, riset) {
 
 //
 // Calculate the time of sunrise
-function getsunrise(elements, circumstances) {
+function getsunrise(elements: any, circumstances: any) {
   getsunriset(elements, circumstances, -1.0)
 }
 
 //
 // Calculate the time of sunset
-function getsunset(elements, circumstances) {
+function getsunset(elements: any, circumstances: any) {
   getsunriset(elements, circumstances, 1.0)
 }
 
 //
 // Copy a set of circumstances
-function copycircumstances(circumstancesfrom, circumstancesto) {
+function copycircumstances(circumstancesfrom: any, circumstancesto: any) {
   var i
 
   for (i = 1; i < 41; i++) {
@@ -439,7 +465,7 @@ function copycircumstances(circumstancesfrom, circumstancesto) {
 
 //
 // Populate the c1, c2, mid, c3 and c4 arrays
-function getall(elements) {
+function getall(elements: any) {
   var pattern
 
   getmid(elements)
@@ -571,60 +597,32 @@ function getall(elements) {
 
 //
 // Read the data that's in the form, and populate the obsvconst array
-function readform() {
+function readform(observer: Observer) {
   var tmp
-
-  // Make sure that we have something to parse from the form
-  if (document.eclipseform.latd.value === "") document.eclipseform.latd.value = "0"
-  if (document.eclipseform.latm.value === "") document.eclipseform.latm.value = "0"
-  if (document.eclipseform.lats.value === "") document.eclipseform.lats.value = "0"
-  if (document.eclipseform.lond.value === "") document.eclipseform.lond.value = "0"
-  if (document.eclipseform.lonm.value === "") document.eclipseform.lonm.value = "0"
-  if (document.eclipseform.lons.value === "") document.eclipseform.lons.value = "0"
-  if (document.eclipseform.alt.value === "") document.eclipseform.alt.value = "0"
-
-  // Write back to the form what we are parsing
-  document.eclipseform.latd.value = Math.abs(parseFloat(document.eclipseform.latd.value))
-  document.eclipseform.latm.value = Math.abs(parseFloat(document.eclipseform.latm.value))
-  document.eclipseform.lats.value = Math.abs(parseFloat(document.eclipseform.lats.value))
-  document.eclipseform.lond.value = Math.abs(parseFloat(document.eclipseform.lond.value))
-  document.eclipseform.lonm.value = Math.abs(parseFloat(document.eclipseform.lonm.value))
-  document.eclipseform.lons.value = Math.abs(parseFloat(document.eclipseform.lons.value))
-  document.eclipseform.alt.value = Math.abs(parseFloat(document.eclipseform.alt.value))
 
   // Get the latitude
   obsvconst[0] =
-    parseFloat(document.eclipseform.latd.value) +
-    parseFloat(document.eclipseform.latm.value) / 60.0 +
-    parseFloat(document.eclipseform.lats.value) / 3600.0
-  obsvconst[0] =
-    obsvconst[0] *
-    parseFloat(document.eclipseform.latx.options[document.eclipseform.latx.selectedIndex].value)
+    observer.latitude.degrees +
+    observer.latitude.minutes / 60.0 +
+    observer.latitude.seconds / 3600.0
+  obsvconst[0] = obsvconst[0] * directions[observer.latitude.direction]
   obsvconst[0] = (obsvconst[0] * Math.PI) / 180.0
 
   // Get the longitude
   obsvconst[1] =
-    parseFloat(document.eclipseform.lond.value) +
-    parseFloat(document.eclipseform.lonm.value) / 60.0 +
-    parseFloat(document.eclipseform.lons.value) / 3600.0
-  obsvconst[1] =
-    obsvconst[1] *
-    parseFloat(document.eclipseform.lonx.options[document.eclipseform.lonx.selectedIndex].value)
+    observer.longitude.degrees +
+    observer.longitude.minutes / 60.0 +
+    observer.longitude.seconds / 3600.0
+  obsvconst[1] = obsvconst[1] * directions[observer.longitude.direction]
   obsvconst[1] = (obsvconst[1] * Math.PI) / 180.0
 
   // Get the altitude
-  obsvconst[2] = parseFloat(document.eclipseform.alt.value)
+  obsvconst[2] = observer.alt
 
   // Get the time zone
-  obsvconst[3] = parseFloat(
-    document.eclipseform.tzm.options[document.eclipseform.tzm.selectedIndex].value
-  )
-  obsvconst[3] =
-    parseFloat(document.eclipseform.tzh.options[document.eclipseform.tzh.selectedIndex].value) +
-    obsvconst[3] / 60.0
-  obsvconst[3] =
-    parseFloat(document.eclipseform.tzx.options[document.eclipseform.tzx.selectedIndex].value) *
-    obsvconst[3]
+  obsvconst[3] = observer.timezone.minutes
+  obsvconst[3] = observer.timezone.hours + obsvconst[3] / 60.0
+  obsvconst[3] = directions[observer.timezone.direction] * obsvconst[3]
 
   // Get the observer's geocentric position
   tmp = Math.atan(0.99664719 * Math.tan(obsvconst[0]))
@@ -637,7 +635,7 @@ function readform() {
 
 //
 // Get the local date of an event
-function getdate(elements, circumstances) {
+function getdate(elements: any, circumstances: any) {
   var t, ans, jd, a, b, c, d, e, index
 
   index = obsvconst[6]
@@ -682,7 +680,7 @@ function getdate(elements, circumstances) {
 
 //
 // Get the local time of an event
-function gettime(elements, circumstances) {
+function gettime(elements: any, circumstances: any) {
   var t, ans, index
 
   ans = ""
@@ -713,9 +711,9 @@ function gettime(elements, circumstances) {
     ans = ans + Math.floor(t)
   }
   if (circumstances[40] === 1) {
-    html = document.createElement("font")
+    let html = document.createElement("font")
     html.setAttribute("color", "#808080")
-    ital = document.createElement("i")
+    let ital = document.createElement("i")
     ital.appendChild(document.createTextNode(ans))
     html.appendChild(ital)
     return html
@@ -730,7 +728,7 @@ function gettime(elements, circumstances) {
 
 //
 // Get the altitude
-function getalt(circumstances) {
+function getalt(circumstances: any) {
   var t, ans
 
   if (circumstances[40] === 2) {
@@ -757,9 +755,9 @@ function getalt(circumstances) {
   }
   ans = ans + t
   if (circumstances[40] === 1) {
-    html = document.createElement("font")
+    let html = document.createElement("font")
     html.setAttribute("color", "#808080")
-    ital = document.createElement("i")
+    let ital = document.createElement("i")
     ital.appendChild(document.createTextNode(ans))
     html.appendChild(ital)
     return html
@@ -770,7 +768,7 @@ function getalt(circumstances) {
 
 //
 // Get the azimuth
-function getazi(circumstances) {
+function getazi(circumstances: any) {
   var t, ans
 
   ans = ""
@@ -790,9 +788,9 @@ function getazi(circumstances) {
   }
   ans = ans + t
   if (circumstances[40] === 1) {
-    html = document.createElement("font")
+    let html = document.createElement("font")
     html.setAttribute("color", "#808080")
-    ital = document.createElement("i")
+    let ital = document.createElement("i")
     ital.appendChild(document.createTextNode(ans))
     html.appendChild(ital)
     return html
@@ -833,24 +831,7 @@ function getduration() {
 //
 // Get the magnitude
 function getmagnitude() {
-  var a
-
-  a = Math.floor(1000.0 * mid[37] + 0.5) / 1000.0
-  if (mid[40] === 1) {
-    html = document.createElement("font")
-    html.setAttribute("color", "#808080")
-    ital = document.createElement("i")
-    ital.appendChild(document.createTextNode(a))
-    html.appendChild(ital)
-    return html
-  }
-  if (mid[40] === 2) {
-    a = a + "(r)"
-  }
-  if (mid[40] === 3) {
-    a = a + "(s)"
-  }
-  return document.createTextNode(a)
+  return Math.floor(1000.0 * mid[37] + 0.5) / 1000.0
 }
 
 //
@@ -859,9 +840,9 @@ function getcoverage() {
   var a, b, c
 
   if (mid[37] <= 0.0) {
-    a = "0.0"
+    a = 0
   } else if (mid[37] >= 1.0) {
-    a = "1.000"
+    a = 1
   } else {
     if (mid[39] === 2) {
       c = mid[38] * mid[38]
@@ -876,55 +857,33 @@ function getcoverage() {
     }
     a = Math.floor(1000.0 * c + 0.5) / 1000.0
   }
-  if (mid[40] === 1) {
-    html = document.createElement("font")
-    html.setAttribute("color", "#808080")
-    ital = document.createElement("i")
-    ital.appendChild(document.createTextNode(a))
-    html.appendChild(ital)
-    return html
-  }
-  if (mid[40] === 2) {
-    a = a + "(r)"
-  }
-  if (mid[40] === 3) {
-    a = a + "(s)"
-  }
-  return document.createTextNode(a)
-}
 
-function clearoldresults() {
-  results = document.getElementById("el_results")
-  resultsTable = document.getElementById("el_locationtable")
-  if (resultsTable != null) results.removeChild(resultsTable)
-  resultsTable = document.getElementById("el_resultstable")
-  if (resultsTable != null) results.removeChild(resultsTable)
+  return a
 }
 
 // CALCULATE!
-function calculatefor(el) {
+/*function calculatefor(el: any) {
   readform()
-  clearoldresults()
-  results = document.getElementById("el_results")
-  p = document.createElement("p")
+  let results = document.getElementById("el_results")
+  let p = document.createElement("p")
   p.setAttribute("id", "el_locationtable")
-  b = document.createElement("h2")
+  let b = document.createElement("h2")
   b.appendChild(
     document.createTextNode("Solar Eclipses visible from  " + document.eclipseform.loc_name.value)
   )
   p.appendChild(b)
-  resultsTable = document.createElement("table")
+  let resultsTable = document.createElement("table")
   resultsTable.setAttribute("border", "0")
-  tbody = document.createElement("tbody")
-  row = document.createElement("tr")
-  td = document.createElement("td")
+  let tbody = document.createElement("tbody")
+  let row = document.createElement("tr")
+  let td = document.createElement("td")
   td.setAttribute("align", "right")
   td.setAttribute("nowrap", "")
   td.appendChild(document.createTextNode("Latitude: "))
   row.appendChild(td)
   td = document.createElement("td")
   td.setAttribute("nowrap", "")
-  text = document.eclipseform.latd.value
+  let text = document.eclipseform.latd.value
   text += "\u00b0 "
   if (document.eclipseform.latm.value < 10) text += "0"
   text += document.eclipseform.latm.value
@@ -987,7 +946,7 @@ function calculatefor(el) {
   tbody.appendChild(row)
   resultsTable.appendChild(tbody)
   p.appendChild(resultsTable)
-  results.appendChild(p)
+  results && results.appendChild(p)
 
   resultsTable = document.createElement("table")
   resultsTable.setAttribute("id", "el_resultstable")
@@ -1038,7 +997,7 @@ function calculatefor(el) {
   td.appendChild(document.createTextNode("A or T Eclipse Duration"))
   row.appendChild(td)
   tbody.appendChild(row)
-  for (i = 0; i < el.length; i += 28) {
+  for (let i = 0; i < el.length; i += 28) {
     obsvconst[6] = i
     getall(el)
     // Is there an event...
@@ -1046,7 +1005,7 @@ function calculatefor(el) {
       row = document.createElement("tr")
       td = document.createElement("td")
       td.setAttribute("nowrap", "")
-      val = document.createTextNode(getdate(el, mid))
+      let val = document.createTextNode(getdate(el, mid))
       td.appendChild(val)
       row.appendChild(td)
       td = document.createElement("td")
@@ -1161,5 +1120,5 @@ function calculatefor(el) {
     }
   }
   resultsTable.appendChild(tbody)
-  results.appendChild(resultsTable)
-}
+  results && results.appendChild(resultsTable)
+}*/
