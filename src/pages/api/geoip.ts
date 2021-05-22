@@ -9,7 +9,7 @@ const geoip = async (req: NextApiRequest, res: NextApiResponse) => {
   if (Array.isArray(ip)) ip = ip[0]
   if (!ip) return res.status(400).end()
 
-  const filepath = resolve("./data/GeoLite2-City.mmdb") // https://github.com/vercel/next.js/issues/8251#issuecomment-657770901
+  const filepath = resolve("./public/data/GeoLite2-City.mmdb") // https://github.com/vercel/next.js/issues/8251#issuecomment-657770901
   const lookup = await maxmind.open<CityResponse>(filepath)
   const response = lookup.get(ip)
 
