@@ -1,5 +1,8 @@
+// TODO: refactor with functional programming (e.g. no more globals) & camel cased functions
+
 export type Observer = {
   latitude: {
+    // TODO decimal degrees
     degrees: number
     minutes: number
     seconds: number
@@ -11,7 +14,7 @@ export type Observer = {
     seconds: number
     direction: "W" | "E"
   }
-  alt: number
+  altitude: number
   timezone: {
     hours: number
     minutes: number
@@ -19,14 +22,117 @@ export type Observer = {
   }
 }
 
+export type Eclipse = number[]
+
+export type EclipseCircumstances = number[]
+/*
+  Eclipse circumstances
+
+  (0) Event type (C1=-2, C2=-1, Mid=0, C3=1, C4=2)
+  (1) t
+
+  -- time-only dependent circumstances (and their per-hour derivatives) follow --
+  (2) x
+  (3) y
+  (4) d
+  (5) sin d
+  (6) cos d
+  (7) mu
+  (8) l1
+  (9) l2
+  (10) dx
+  (11) dy
+  (12) dd
+  (13) dmu
+  (14) dl1
+  (15) dl2
+
+  -- time and location dependent circumstances follow --
+  (16) h
+  (17) sin h
+  (18) cos h
+  (19) xi
+  (20) eta
+  (21) zeta
+  (22) dxi
+  (23) deta
+  (24) u
+  (25) v
+  (26) a
+  (27) b
+  (28) l1'
+  (29) l2'
+  (30) n^2
+
+  -- observational circumstances follow --
+  (31) p
+  (32) alt
+  (33) q
+  (34) v
+  (35) azi
+  (36) m (mid eclipse only) or limb correction applied (where available!)
+  (37) magnitude (mid eclipse only)
+  (38) moon/sun (mid eclipse only)
+  (39) calculated local event type for a transparent earth (mid eclipse only)
+      (0 = none, 1 = partial, 2 = annular, 3 = total)
+  (40) event visibility
+      (0 = above horizon, 1 = below horizon, 2 = sunrise, 3 = sunset, 4 = below horizon, disregard)
+*/
+
 const directions = {
+  // TODO deprecate
   N: 1,
   S: -1,
   W: 1,
   E: -1,
 }
 
-export const getEclipseDetails = (eclipse: any, observer: Observer) => {}
+export enum EclipseType {
+  None,
+  Partial,
+  Annular,
+  Total,
+}
+
+export enum EventVisibility {
+  AboveHorizon,
+  BelowHorizon,
+  Sunrise,
+  Sunset,
+  BelowHorizonDisregard,
+}
+
+export const getEclipseDetails = (eclipse: Eclipse, observer: Observer) => {
+  setObserver(observer)
+  getall(eclipse)
+
+  console.log(obsvconst)
+
+  return {
+    type: mid[39] as EclipseType,
+    date: getDate(eclipse, mid),
+    magnitude: getMagnitude(),
+    obscursion: getObscursion(),
+    duration: getDuration(),
+
+    c1: getCircumstancesDetails(eclipse, c1),
+    c2: getCircumstancesDetails(eclipse, c2),
+    mid: getCircumstancesDetails(eclipse, mid),
+    c3: getCircumstancesDetails(eclipse, c3),
+    c4: getCircumstancesDetails(eclipse, c4),
+  }
+}
+
+const getCircumstancesDetails = (eclipse: Eclipse, circumstances: EclipseCircumstances) => {
+  if (!circumstances.length) return null
+
+  return {
+    visibility: circumstances[40] as EventVisibility,
+    time: getTime(eclipse, circumstances),
+    altitude: getAltitude(circumstances),
+    azimuth: getAzimuth(circumstances),
+  }
+}
 
 // Javascript Solar Eclipse Explorer
 //
@@ -68,56 +174,6 @@ GNU General Public License for more details.
 //
 var obsvconst: number[] = []
 
-//
-// Eclipse circumstances
-//  (0) Event type (C1=-2, C2=-1, Mid=0, C3=1, C4=2)
-//  (1) t
-// -- time-only dependent circumstances (and their per-hour derivatives) follow --
-//  (2) x
-//  (3) y
-//  (4) d
-//  (5) sin d
-//  (6) cos d
-//  (7) mu
-//  (8) l1
-//  (9) l2
-// (10) dx
-// (11) dy
-// (12) dd
-// (13) dmu
-// (14) dl1
-// (15) dl2
-// -- time and location dependent circumstances follow --
-// (16) h
-// (17) sin h
-// (18) cos h
-// (19) xi
-// (20) eta
-// (21) zeta
-// (22) dxi
-// (23) deta
-// (24) u
-// (25) v
-// (26) a
-// (27) b
-// (28) l1'
-// (29) l2'
-// (30) n^2
-// -- observational circumstances follow --
-// (31) p
-// (32) alt
-// (33) q
-// (34) v
-// (35) azi
-// (36) m (mid eclipse only) or limb correction applied (where available!)
-// (37) magnitude (mid eclipse only)
-// (38) moon/sun (mid eclipse only)
-// (39) calculated local event type for a transparent earth (mid eclipse only)
-//      (0 = none, 1 = partial, 2 = annular, 3 = total)
-// (40) event visibility
-//      (0 = above horizon, 1 = below horizon, 2 = sunrise, 3 = sunset, 4 = below horizon, disregard)
-//
-
 var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 var c1: number[] = []
@@ -128,7 +184,7 @@ var c4: number[] = []
 
 //
 // Populate the circumstances array with the time-only dependent circumstances (x, y, d, m, ...)
-function timedependent(elements: any, circumstances: any) {
+function timedependent(elements: Eclipse, circumstances: EclipseCircumstances) {
   var type, index, t, ans
 
   t = circumstances[1]
@@ -195,7 +251,7 @@ function timedependent(elements: any, circumstances: any) {
 
 //
 // Populate the circumstances array with the time and location dependent circumstances
-function timelocdependent(elements: any, circumstances: any) {
+function timelocdependent(elements: Eclipse, circumstances: EclipseCircumstances) {
   var index, type
 
   timedependent(elements, circumstances)
@@ -241,7 +297,7 @@ function timelocdependent(elements: any, circumstances: any) {
 
 //
 // Iterate on C1 or C4
-function c1c4iterate(elements: any, circumstances: any) {
+function c1c4iterate(elements: Eclipse, circumstances: EclipseCircumstances) {
   var sign, iter, tmp, n
 
   timelocdependent(elements, circumstances)
@@ -273,7 +329,7 @@ function c1c4iterate(elements: any, circumstances: any) {
 //   Entry conditions -
 //   1. The mid array must be populated
 //   2. The magnitude at mid eclipse must be > 0.0
-function getc1c4(elements: any) {
+function getc1c4(elements: Eclipse) {
   var tmp, n
 
   n = Math.sqrt(mid[30])
@@ -290,7 +346,7 @@ function getc1c4(elements: any) {
 
 //
 // Iterate on C2 or C3
-function c2c3iterate(elements: any, circumstances: any) {
+function c2c3iterate(elements: Eclipse, circumstances: EclipseCircumstances) {
   var sign, iter, tmp, n
 
   timelocdependent(elements, circumstances)
@@ -325,7 +381,7 @@ function c2c3iterate(elements: any, circumstances: any) {
 //   Entry conditions -
 //   1. The mid array must be populated
 //   2. There must be either a total or annular eclipse at the location!
-function getc2c3(elements: any) {
+function getc2c3(elements: Eclipse) {
   var tmp, n
 
   n = Math.sqrt(mid[30])
@@ -347,7 +403,7 @@ function getc2c3(elements: any) {
 
 //
 // Get the observational circumstances
-function observational(circumstances: any) {
+function observational(circumstances: EclipseCircumstances) {
   var contacttype, coslat, sinlat
 
   // We are looking at an "external" contact UNLESS this is a total eclipse AND we are looking at
@@ -402,7 +458,7 @@ function midobservational() {
 
 //
 // Calculate mid eclipse
-function getmid(elements: any) {
+function getmid(elements: Eclipse) {
   var iter, tmp
 
   mid[0] = 0
@@ -420,7 +476,7 @@ function getmid(elements: any) {
 
 //
 // Calculate the time of sunrise or sunset
-function getsunriset(elements: any, circumstances: any, riset: number) {
+function getsunriset(elements: Eclipse, circumstances: EclipseCircumstances, riset: number) {
   var h0, diff, iter
 
   diff = 1.0
@@ -443,13 +499,13 @@ function getsunriset(elements: any, circumstances: any, riset: number) {
 
 //
 // Calculate the time of sunrise
-function getsunrise(elements: any, circumstances: any) {
+function getsunrise(elements: Eclipse, circumstances: EclipseCircumstances) {
   getsunriset(elements, circumstances, -1.0)
 }
 
 //
 // Calculate the time of sunset
-function getsunset(elements: any, circumstances: any) {
+function getsunset(elements: Eclipse, circumstances: EclipseCircumstances) {
   getsunriset(elements, circumstances, 1.0)
 }
 
@@ -465,7 +521,7 @@ function copycircumstances(circumstancesfrom: any, circumstancesto: any) {
 
 //
 // Populate the c1, c2, mid, c3 and c4 arrays
-function getall(elements: any) {
+function getall(elements: Eclipse) {
   var pattern
 
   getmid(elements)
@@ -597,9 +653,7 @@ function getall(elements: any) {
 
 //
 // Read the data that's in the form, and populate the obsvconst array
-function readform(observer: Observer) {
-  var tmp
-
+function setObserver(observer: Observer) {
   // Get the latitude
   obsvconst[0] =
     observer.latitude.degrees +
@@ -617,7 +671,7 @@ function readform(observer: Observer) {
   obsvconst[1] = (obsvconst[1] * Math.PI) / 180.0
 
   // Get the altitude
-  obsvconst[2] = observer.alt
+  obsvconst[2] = observer.altitude
 
   // Get the time zone
   obsvconst[3] = observer.timezone.minutes
@@ -625,17 +679,17 @@ function readform(observer: Observer) {
   obsvconst[3] = directions[observer.timezone.direction] * obsvconst[3]
 
   // Get the observer's geocentric position
-  tmp = Math.atan(0.99664719 * Math.tan(obsvconst[0]))
+  const tmp = Math.atan(0.99664719 * Math.tan(obsvconst[0]))
   obsvconst[4] = 0.99664719 * Math.sin(tmp) + (obsvconst[2] / 6378140.0) * Math.sin(obsvconst[0])
   obsvconst[5] = Math.cos(tmp) + (obsvconst[2] / 6378140.0) * Math.cos(obsvconst[0])
 
   // The index of the selected eclipse...
-  //obsvconst[6] = 28 * (parseInt(document.eclipseform.index.options[document.eclipseform.index.selectedIndex].value) + 65)
+  obsvconst[6] = 0 // Always zero as we now pass in an array with only the interesting data // TODO: deprecate
 }
 
 //
 // Get the local date of an event
-function getdate(elements: any, circumstances: any) {
+function getDate(elements: Eclipse, circumstances: EclipseCircumstances) {
   var t, ans, jd, a, b, c, d, e, index
 
   index = obsvconst[6]
@@ -680,7 +734,7 @@ function getdate(elements: any, circumstances: any) {
 
 //
 // Get the local time of an event
-function gettime(elements: any, circumstances: any) {
+function getTime(elements: Eclipse, circumstances: EclipseCircumstances) {
   var t, ans, index
 
   ans = ""
@@ -710,69 +764,35 @@ function gettime(elements: any, circumstances: any) {
     }
     ans = ans + Math.floor(t)
   }
-  if (circumstances[40] === 1) {
-    let html = document.createElement("font")
-    html.setAttribute("color", "#808080")
-    let ital = document.createElement("i")
-    ital.appendChild(document.createTextNode(ans))
-    html.appendChild(ital)
-    return html
-  } else if (circumstances[40] === 2) {
-    return document.createTextNode(ans + "(r)")
-  } else if (circumstances[40] === 3) {
-    return document.createTextNode(ans + "(s)")
-  } else {
-    return document.createTextNode(ans)
-  }
+
+  return ans
 }
 
 //
 // Get the altitude
-function getalt(circumstances: any) {
-  var t, ans
+function getAltitude(circumstances: EclipseCircumstances) {
+  let t
 
-  if (circumstances[40] === 2) {
-    return document.createTextNode("0(r)")
+  if (circumstances[40] === 2 || circumstances[40] === 3) {
+    return 0
   }
-  if (circumstances[40] === 3) {
-    return document.createTextNode("0(s)")
-  }
+
   if (circumstances[32] < 0.0 && circumstances[32] >= -0.00524) {
     // Crude correction for refraction (and for consistency's sake)
     t = 0.0
   } else {
     t = (circumstances[32] * 180.0) / Math.PI
   }
-  if (t < 0.0) {
-    ans = "-"
-    t = -t
-  } else {
-    ans = ""
-  }
+
   t = Math.floor(t + 0.5)
-  if (t < 10.0) {
-    ans = ans + "0"
-  }
-  ans = ans + t
-  if (circumstances[40] === 1) {
-    let html = document.createElement("font")
-    html.setAttribute("color", "#808080")
-    let ital = document.createElement("i")
-    ital.appendChild(document.createTextNode(ans))
-    html.appendChild(ital)
-    return html
-  } else {
-    return document.createTextNode(ans)
-  }
+
+  return t
 }
 
 //
 // Get the azimuth
-function getazi(circumstances: any) {
-  var t, ans
-
-  ans = ""
-  t = (circumstances[35] * 180.0) / Math.PI
+function getAzimuth(circumstances: EclipseCircumstances) {
+  let t = (circumstances[35] * 180.0) / Math.PI
   if (t < 0.0) {
     t = t + 360.0
   }
@@ -780,30 +800,18 @@ function getazi(circumstances: any) {
     t = t - 360.0
   }
   t = Math.floor(t + 0.5)
-  if (t < 100.0) {
-    ans = ans + "0"
-  }
-  if (t < 10.0) {
-    ans = ans + "0"
-  }
-  ans = ans + t
-  if (circumstances[40] === 1) {
-    let html = document.createElement("font")
-    html.setAttribute("color", "#808080")
-    let ital = document.createElement("i")
-    ital.appendChild(document.createTextNode(ans))
-    html.appendChild(ital)
-    return html
-  } else {
-    return document.createTextNode(ans)
-  }
+  return t
 }
 
 //
 // Get the duration in mm:ss.s format
 //
 // Adapted from code written by Stephen McCann - 27/04/2001
-function getduration() {
+function getDuration() {
+  // TODO: return seconds
+
+  if (mid[39] === EclipseType.Annular || mid[39] === EclipseType.Partial) return null
+
   var tmp, ans
 
   if (c3[40] === 4) {
@@ -830,13 +838,13 @@ function getduration() {
 
 //
 // Get the magnitude
-function getmagnitude() {
+function getMagnitude() {
   return Math.floor(1000.0 * mid[37] + 0.5) / 1000.0
 }
 
 //
-// Get the coverage
-function getcoverage() {
+// Get the obscursion
+function getObscursion() {
   var a, b, c
 
   if (mid[37] <= 0.0) {
@@ -860,265 +868,3 @@ function getcoverage() {
 
   return a
 }
-
-// CALCULATE!
-/*function calculatefor(el: any) {
-  readform()
-  let results = document.getElementById("el_results")
-  let p = document.createElement("p")
-  p.setAttribute("id", "el_locationtable")
-  let b = document.createElement("h2")
-  b.appendChild(
-    document.createTextNode("Solar Eclipses visible from  " + document.eclipseform.loc_name.value)
-  )
-  p.appendChild(b)
-  let resultsTable = document.createElement("table")
-  resultsTable.setAttribute("border", "0")
-  let tbody = document.createElement("tbody")
-  let row = document.createElement("tr")
-  let td = document.createElement("td")
-  td.setAttribute("align", "right")
-  td.setAttribute("nowrap", "")
-  td.appendChild(document.createTextNode("Latitude: "))
-  row.appendChild(td)
-  td = document.createElement("td")
-  td.setAttribute("nowrap", "")
-  let text = document.eclipseform.latd.value
-  text += "\u00b0 "
-  if (document.eclipseform.latm.value < 10) text += "0"
-  text += document.eclipseform.latm.value
-  text += "' "
-  if (document.eclipseform.lats.value < 10) text += "0"
-  text += document.eclipseform.lats.value
-  text += '" '
-  text += document.eclipseform.latx.options[document.eclipseform.latx.selectedIndex].text
-  td.appendChild(document.createTextNode(text))
-  row.appendChild(td)
-  tbody.appendChild(row)
-  row = document.createElement("tr")
-  td = document.createElement("td")
-  td.setAttribute("align", "right")
-  td.setAttribute("nowrap", "")
-  td.appendChild(document.createTextNode("Longitude: "))
-  row.appendChild(td)
-  td = document.createElement("td")
-  td.setAttribute("nowrap", "")
-  text = document.eclipseform.lond.value
-  text += "\u00b0 "
-  if (document.eclipseform.lonm.value < 10) text += "0"
-  text += document.eclipseform.lonm.value
-  text += "' "
-  if (document.eclipseform.lons.value < 10) text += "0"
-  text += document.eclipseform.lons.value
-  text += '" '
-  text += document.eclipseform.lonx.options[document.eclipseform.lonx.selectedIndex].text
-  td.appendChild(document.createTextNode(text))
-  row.appendChild(td)
-  tbody.appendChild(row)
-  row = document.createElement("tr")
-  td = document.createElement("td")
-  td.setAttribute("align", "right")
-  td.setAttribute("nowrap", "")
-  td.appendChild(document.createTextNode("Altitude: "))
-  row.appendChild(td)
-  td = document.createElement("td")
-  td.setAttribute("nowrap", "")
-  text = document.eclipseform.alt.value
-  text += "m"
-  td.appendChild(document.createTextNode(text))
-  row.appendChild(td)
-  tbody.appendChild(row)
-  row = document.createElement("tr")
-  td = document.createElement("td")
-  td.setAttribute("align", "right")
-  td.setAttribute("nowrap", "")
-  td.appendChild(document.createTextNode("Time Zone: "))
-  row.appendChild(td)
-  td = document.createElement("td")
-  td.setAttribute("nowrap", "")
-  text = document.eclipseform.tzh.options[document.eclipseform.tzh.selectedIndex].text
-  text += ":"
-  text += document.eclipseform.tzm.options[document.eclipseform.tzm.selectedIndex].text
-  text += " "
-  text += document.eclipseform.tzx.options[document.eclipseform.tzx.selectedIndex].text
-  td.appendChild(document.createTextNode(text))
-  row.appendChild(td)
-  tbody.appendChild(row)
-  resultsTable.appendChild(tbody)
-  p.appendChild(resultsTable)
-  results && results.appendChild(p)
-
-  resultsTable = document.createElement("table")
-  resultsTable.setAttribute("id", "el_resultstable")
-  resultsTable.setAttribute("width", "150")
-  resultsTable.setAttribute("border", "2")
-  tbody = document.createElement("tbody")
-  row = document.createElement("tr")
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Calendar Date"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Eclipse Type"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Partial Eclipse Begins"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Sun Alt"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("A or T Eclipse Begins"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Maximum Eclipse"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Sun Alt"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Sun Azi"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("A or T Eclipse Ends"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Partial Eclipse Ends"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Sun Alt"))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Eclipse Mag."))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("Eclipse Obs."))
-  row.appendChild(td)
-  td = document.createElement("th")
-  td.appendChild(document.createTextNode("A or T Eclipse Duration"))
-  row.appendChild(td)
-  tbody.appendChild(row)
-  for (let i = 0; i < el.length; i += 28) {
-    obsvconst[6] = i
-    getall(el)
-    // Is there an event...
-    if (mid[39] > 0) {
-      row = document.createElement("tr")
-      td = document.createElement("td")
-      td.setAttribute("nowrap", "")
-      let val = document.createTextNode(getdate(el, mid))
-      td.appendChild(val)
-      row.appendChild(td)
-      td = document.createElement("td")
-      td.setAttribute("align", "center")
-      if (mid[39] === 1) {
-        val = document.createTextNode("P")
-      } else if (mid[39] === 2) {
-        val = document.createTextNode("A")
-      } else {
-        val = document.createTextNode("T")
-      }
-      td.appendChild(val)
-      row.appendChild(td)
-      // Partial eclipse start
-      if (c1[40] === 4) {
-        td = document.createElement("td")
-        td.setAttribute("align", "center")
-        td.appendChild(document.createTextNode("-"))
-        row.appendChild(td)
-        td = document.createElement("td")
-        td.appendChild(document.createTextNode("\u00a0"))
-        row.appendChild(td)
-      } else {
-        // Partial eclipse start time
-        td = document.createElement("td")
-        td.setAttribute("nowrap", "")
-        td.appendChild(gettime(el, c1))
-        row.appendChild(td)
-        // Partial eclipse alt
-        td = document.createElement("td")
-        td.setAttribute("align", "right")
-        td.appendChild(getalt(c1))
-        row.appendChild(td)
-      }
-      // Central eclipse time
-      td = document.createElement("td")
-      if (mid[39] > 1 && c2[40] !== 4) {
-        td.setAttribute("nowrap", "")
-        td.appendChild(gettime(el, c2))
-      } else {
-        td.setAttribute("align", "center")
-        td.appendChild(document.createTextNode("-"))
-      }
-      row.appendChild(td)
-      // Maximum eclipse time
-      td = document.createElement("td")
-      td.setAttribute("nowrap", "")
-      td.appendChild(gettime(el, mid))
-      row.appendChild(td)
-      // Maximum eclipse alt
-      td = document.createElement("td")
-      td.setAttribute("align", "right")
-      td.appendChild(getalt(mid))
-      row.appendChild(td)
-      // Maximum eclipse azi
-      td = document.createElement("td")
-      td.setAttribute("align", "right")
-      td.appendChild(getazi(mid))
-      row.appendChild(td)
-      // Central eclipse ends
-      td = document.createElement("td")
-      if (mid[39] > 1 && c3[40] !== 4) {
-        td.setAttribute("nowrap", "")
-        td.appendChild(gettime(el, c3))
-      } else {
-        td.setAttribute("align", "center")
-        td.appendChild(document.createTextNode("-"))
-      }
-      row.appendChild(td)
-      // Partial eclipse ends
-      if (c4[40] === 4) {
-        td = document.createElement("td")
-        td.setAttribute("align", "center")
-        td.appendChild(document.createTextNode("-"))
-        row.appendChild(td)
-        td = document.createElement("td")
-        td.appendChild(document.createTextNode("\u00a0"))
-        row.appendChild(td)
-      } else {
-        // Partial eclipse ends
-        td = document.createElement("td")
-        td.setAttribute("nowrap", "")
-        td.appendChild(gettime(el, c4))
-        row.appendChild(td)
-        // ... sun alt
-        td = document.createElement("td")
-        td.setAttribute("align", "right")
-        td.appendChild(getalt(c4))
-        row.appendChild(td)
-      }
-      // Eclipse magnitude
-      td = document.createElement("td")
-      td.appendChild(getmagnitude())
-      row.appendChild(td)
-      // Coverage
-      td = document.createElement("td")
-      td.appendChild(getcoverage())
-      row.appendChild(td)
-      // Central duration
-      td = document.createElement("td")
-      if (mid[39] > 1) {
-        td.setAttribute("align", "right")
-        td.setAttribute("nowrap", "")
-        val = document.createTextNode(getduration())
-      } else {
-        td.setAttribute("align", "center")
-        val = document.createTextNode("-")
-      }
-      td.appendChild(val)
-      row.appendChild(td)
-      tbody.appendChild(row)
-    }
-  }
-  resultsTable.appendChild(tbody)
-  results && results.appendChild(resultsTable)
-}*/
