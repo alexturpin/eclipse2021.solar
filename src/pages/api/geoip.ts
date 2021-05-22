@@ -2,13 +2,14 @@ import type { NextApiRequest, NextApiResponse } from "next"
 //import maxmind, { CityResponse } from "maxmind"
 import { resolve } from "path"
 import { promises as fs } from "fs"
+import dirtree from "directory-tree"
 
 const geoip = async (req: NextApiRequest, res: NextApiResponse) => {
-  const filepath = resolve("./public/test.txt")
-
   res.status(200).json({
-    path: filepath,
-    data: await fs.readFile(filepath, "utf-8"),
+    __dirname: __dirname,
+    cwd: process.cwd(),
+    resolve: resolve("./public"),
+    tree: dirtree(process.cwd()),
   })
 
   /*if (req.method !== "GET") return res.status(405).end()
