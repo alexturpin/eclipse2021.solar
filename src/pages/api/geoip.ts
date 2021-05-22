@@ -1,9 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import maxmind, { CityResponse } from "maxmind"
+//import maxmind, { CityResponse } from "maxmind"
 import { resolve } from "path"
+import { promises as fs } from "fs"
 
 const geoip = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== "GET") return res.status(405).end()
+  const filepath = resolve("./public/test.txt")
+
+  res.status(200).json({
+    path: filepath,
+    data: await fs.readFile(filepath, "utf-8"),
+  })
+
+  /*if (req.method !== "GET") return res.status(405).end()
 
   let ip = req.headers["x-real-ip"] ?? process.env.FALLBACK_IP
   if (Array.isArray(ip)) ip = ip[0]
@@ -20,7 +28,7 @@ const geoip = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
-  return res.status(200).json(data)
+  return res.status(200).json(data)*/
 }
 
 export default geoip
