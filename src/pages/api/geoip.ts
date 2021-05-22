@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import maxmind, { CityResponse } from "maxmind"
+import { join } from "path"
 
 const geoip = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "GET") return res.status(405).end()
@@ -8,7 +9,7 @@ const geoip = async (req: NextApiRequest, res: NextApiResponse) => {
   if (Array.isArray(ip)) ip = ip[0]
   if (!ip) return res.status(400).end()
 
-  const lookup = await maxmind.open<CityResponse>("data/GeoLite2-City.mmdb")
+  const lookup = await maxmind.open<CityResponse>(join(__dirname, "_files", "GeoLite2-City.mmdb"))
   const response = lookup.get(ip)
 
   let data = null

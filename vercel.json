@@ -1,7 +1,7 @@
 {
   "functions": {
     "src/pages/api/geoip.ts": {
-      "includeFiles": "data/**"
+      "includeFiles": "_files/**"
     }
   }
 }
