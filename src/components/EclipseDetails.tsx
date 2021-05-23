@@ -3,6 +3,7 @@ import eclipse from "../eclipse/2021-06-10.json"
 import { useEffect, useMemo, useState } from "react"
 import { useTranslation, Trans } from "next-i18next"
 import { SpinnerIcon } from "./SpinnerIcon"
+import { useRouter } from "next/dist/client/router"
 
 // TODO total, sunset
 
@@ -11,24 +12,39 @@ const Detail = ({ children }: { children: React.ReactNode }) => (
 )
 
 type Location = {
-  city: string
-  region: string
-  timezone: string
+  city?: string
+  region?: string
+  timezone?: string
   ll: [number, number]
 }
 
 export const EclipseDetails = () => {
+  const { query } = useRouter()
   const [location, setLocation] = useState<Location | null>(null)
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    const getLocation = async () => {
-      const res = await fetch("/api/geoip")
-      if (res.ok) setLocation(await res.json())
-      else setError(true)
+    let isSubscribed = true
+
+    if (query.lat && query.long) {
+      // Debug override
+      setLocation({
+        ll: [parseFloat(query.lat as string), parseFloat(query.long as string)],
+      })
+    } else {
+      // Geo IP fetch
+      const getLocation = async () => {
+        const res = await fetch("/api/geoip")
+        if (res.ok) isSubscribed && setLocation(await res.json())
+        else setError(true)
+      }
+      getLocation()
     }
-    getLocation()
-  }, [])
+
+    return () => {
+      isSubscribed = false
+    }
+  }, [query])
 
   const eclipseDetails = useMemo(() => {
     if (!location) return
