@@ -89,7 +89,7 @@ export const EclipseDetails = () => {
             />
           </Detail>
 
-          {eclipseDetails.c2?.type === EclipseType.Annular && (
+          {eclipseDetails.mid?.type === EclipseType.Annular && (
             <Detail>
               <Trans
                 i18nKey={"where-when-c2-annular"}

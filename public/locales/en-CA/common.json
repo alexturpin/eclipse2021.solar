@@ -16,12 +16,12 @@
   "where-when-c1": "First contact, when the moon starts transiting across the sun from {{location}}, will be at <strong>{{start}}</strong>.",
   "where-when-c1-sunrise": "You'll be able to witness the eclipse from {{location}} as soon as the sun starts rising at <strong>{{start}}</strong>!",
   "where-when-c2-annular": "At <strong>{{start}}</strong>, {{location}} residents will be some of the lucky few to see the eclipse become annular! Annularity will last <strong>{{duration}}</strong>, or until {{finish}}.",
-  "where-when-mid": "The eclipse will reach its maximum point at <strong>{{start}}</strong>, obscuring <strong>{{obscursion}}%</strong> of the sun! It's all downhill from here.",
+  "where-when-mid": "The eclipse will reach its maximum point at <strong>{{start}}</strong>, obscuring <strong>{{obscursion}}%</strong> of the sun! It's all downhill from there.",
   "where-when-c4": "The moon will finish transiting across the sun at <strong>{{start}}</strong>",
 
   "location-loading": "Detecting location...",
   "location-error": "There was an error detecting your location.",
-  "location-unknown": "an unknown city",
+  "location-unknown": "unknown city",
 
   "how": "How",
   "how-details": "<p>The only safe way to look at the upcoming eclipse directly is through special-purpose solar filters. The American Astronomical Society recommends solar filters that meet the ISO 12312-2 standard and maintains a <aas>reputable vendors list</aas>.</p><p>For a convenient and safe enjoyment of the eclipse, you can purchase glasses manufactured by one of the vendors right on this website. See our FAQ below.</p>",
