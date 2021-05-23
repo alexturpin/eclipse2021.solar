@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next"
 import Head from "next/head"
-import { Header, Cart } from "../shop/components"
+import { Header, Shop } from "../components"
 import { getProducts, Product } from "../shop/shopify"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { i18n } from "../../next-i18next.config"
@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ locale }) => {
   }
 }
 
-const Shop = ({ products }: ShopProps) => {
+const Home = ({ products }: ShopProps) => {
   const { t } = useTranslation()
 
   return (
@@ -32,9 +32,9 @@ const Shop = ({ products }: ShopProps) => {
         </title>
       </Head>
       <Header />
-      <Cart product={products[0]} />
+      <Shop product={products[0]} />
     </>
   )
 }
 
-export default Shop
+export default Home

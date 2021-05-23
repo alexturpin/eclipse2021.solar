@@ -18,8 +18,6 @@ export const Header = () => {
         <p className="text-center mb-6 text-sm leading-loose md:-mt-16 -mt-14">{t("intro-1")}</p>
         <p className="text-center mb-6 text-sm leading-loose">{t("intro-2")}</p>
         <p className="text-center mb-14 text-sm leading-loose">{t("intro-3")}</p>
-
-        <h2 className="font-extrabold text-2xl text-yellow uppercase pb-4">{t("shop")}</h2>
       </div>
     </header>
   )

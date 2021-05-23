@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { useState } from "react"
-import { formatCurrency, Locale } from "../utils"
-import { getCheckoutURL, Product } from "../shopify"
+import { formatCurrency, Locale } from "../shop/utils"
+import { getCheckoutURL, Product } from "../shop/shopify"
 import { Quantity } from "./Quantity"
 import { Checkout } from "./Checkout"
 import { useTranslation } from "next-i18next"
@@ -9,11 +9,11 @@ import { useTranslation } from "next-i18next"
 const MIN_ITEMS = 2
 const MAX_ITEMS = 10
 
-type CartProps = {
+type ShopProps = {
   product: Product
 }
 
-export const Cart = ({ product }: CartProps) => {
+export const Shop = ({ product }: ShopProps) => {
   const { t, i18n } = useTranslation()
 
   const [quantity, setQuantity] = useState(2)
@@ -31,6 +31,8 @@ export const Cart = ({ product }: CartProps) => {
 
   return (
     <div className="container mx-auto px-6">
+      <h2 className="font-extrabold text-2xl text-yellow uppercase pb-4">{t("shop")}</h2>
+
       <div className="bg-purple px-5 py-5 rounded-md">
         <div className="flex justify-between items-center flex-col md:flex-row md:pb-5">
           <div className="w-full md:w-1/4 pb-5 md:pb-0">
