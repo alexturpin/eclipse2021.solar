@@ -1,13 +1,18 @@
 // @ts-nocheck
 
 import type { NextApiRequest, NextApiResponse } from "next"
-//import maxmind, { CityResponse } from "maxmind"
-import { resolve } from "path"
-import { promises as fs } from "fs"
-import dirtree from "directory-tree"
 
-const geoip = async (req: NextApiRequest, res: NextApiResponse) => {
-  const tree = dirtree(process.cwd(), { exclude: /node_modules/ })
+import geoip from "@codebet/geoip-lite-auto-update"
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  res.status(200).send(geoip.lookup(process.env.FALLBACK_IP))
+
+  /*const lookup = new Reader<CityResponse>(db)
+
+  res.status(200).json(lookup.get(process.env.FALLBACK_IP))*/
+
+  /*const tree = dirtree(process.cwd(), { exclude: /node_modules/ })
+	lookup()
   const files = []
 
   const aggregate = (obj: any) => {
@@ -17,7 +22,7 @@ const geoip = async (req: NextApiRequest, res: NextApiResponse) => {
 
   aggregate(tree)
 
-  res.status(200).send(files.join("\n"))
+  res.status(200).send(files.join("\n"))*/
 
   /*if (req.method !== "GET") return res.status(405).end()
 
@@ -39,4 +44,4 @@ const geoip = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(200).json(data)*/
 }
 
-export default geoip
+export default handler
