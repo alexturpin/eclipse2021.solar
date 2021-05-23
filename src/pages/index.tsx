@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next"
 import Head from "next/head"
-import { Header, Shop } from "../components"
+import { Header, Info, Shop } from "../components"
 import { getProducts, Product } from "../shop/shopify"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { i18n } from "../../next-i18next.config"
@@ -32,6 +32,7 @@ const Home = ({ products }: ShopProps) => {
         </title>
       </Head>
       <Header />
+      <Info />
       <Shop product={products[0]} />
     </>
   )

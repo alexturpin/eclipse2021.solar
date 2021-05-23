@@ -5,6 +5,7 @@ import { getCheckoutURL, Product } from "../shop/shopify"
 import { Quantity } from "./Quantity"
 import { Checkout } from "./Checkout"
 import { useTranslation } from "next-i18next"
+import { Heading } from "./Heading"
 
 const MIN_ITEMS = 2
 const MAX_ITEMS = 10
@@ -30,8 +31,8 @@ export const Shop = ({ product }: ShopProps) => {
   }
 
   return (
-    <div className="container mx-auto px-6">
-      <h2 className="font-extrabold text-2xl text-yellow uppercase pb-4">{t("shop")}</h2>
+    <div className="container mx-auto px-6 md:px-2">
+      <Heading>{t("shop")}</Heading>
 
       <div className="bg-purple px-5 py-5 rounded-md">
         <div className="flex justify-between items-center flex-col md:flex-row md:pb-5">

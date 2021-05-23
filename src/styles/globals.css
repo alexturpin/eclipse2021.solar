@@ -28,3 +28,11 @@ body {
   background: linear-gradient(to bottom, #110c1e00, #110c1eff),
     linear-gradient(to right, #ec6e27ff, #b93169ff);
 }
+
+.eclipse-details strong {
+  @apply text-yellow;
+}
+
+.eclipse-details p {
+  @apply pb-4;
+}

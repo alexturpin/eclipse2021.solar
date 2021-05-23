@@ -106,8 +106,6 @@ export const getEclipseDetails = (eclipse: Eclipse, observer: Observer) => {
   setObserver(observer)
   getall(eclipse)
 
-  console.log(obsvconst)
-
   return {
     type: mid[39] as EclipseType,
     date: getDate(eclipse, mid),
@@ -129,6 +127,7 @@ const getCircumstancesDetails = (eclipse: Eclipse, circumstances: EclipseCircums
   return {
     visibility: circumstances[40] as EventVisibility,
     time: getTime(eclipse, circumstances),
+    type: circumstances[39] as EclipseType,
     altitude: getAltitude(circumstances),
     azimuth: getAzimuth(circumstances),
   }
@@ -810,7 +809,7 @@ function getAzimuth(circumstances: EclipseCircumstances) {
 function getDuration() {
   // TODO: return seconds
 
-  if (mid[39] === EclipseType.Annular || mid[39] === EclipseType.Partial) return null
+  if (mid[39] !== EclipseType.Annular && mid[39] !== EclipseType.Total) return null
 
   var tmp, ans
 
