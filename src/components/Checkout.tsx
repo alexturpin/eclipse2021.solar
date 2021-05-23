@@ -8,7 +8,6 @@ type CheckoutProps = {
 
 export const Checkout = ({ onCheckout, loading }: CheckoutProps) => {
   const { t } = useTranslation()
-  loading = true
 
   return (
     <button
