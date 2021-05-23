@@ -8,9 +8,7 @@ export const Info = () => {
   return (
     <div className="eclipse-details container mx-auto px-6 md:px-2">
       <Heading>{t("what")}</Heading>
-      <p>
-        <Trans i18nKey="what-details" />
-      </p>
+      <Trans i18nKey="what-details" />
 
       <Heading>{t("where-when")}</Heading>
       <EclipseDetails />
