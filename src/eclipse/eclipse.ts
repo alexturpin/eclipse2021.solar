@@ -3,7 +3,7 @@
 export type Observer = {
   latitude: number
   longitude: number
-  altitude: number
+  altitude?: number
   timezone: number
 }
 
@@ -637,7 +637,7 @@ function setObserver(observer: Observer) {
   obsvconst[1] = (-observer.longitude * Math.PI) / 180.0
 
   // Get the altitude
-  obsvconst[2] = observer.altitude
+  obsvconst[2] = observer.altitude ?? 0
 
   // Get the time zone
   obsvconst[3] = -observer.timezone
