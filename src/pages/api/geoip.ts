@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import type { NextApiRequest, NextApiResponse } from "next"
 //import maxmind, { CityResponse } from "maxmind"
 import { resolve } from "path"
@@ -5,12 +7,17 @@ import { promises as fs } from "fs"
 import dirtree from "directory-tree"
 
 const geoip = async (req: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).json({
-    __dirname: __dirname,
-    cwd: process.cwd(),
-    resolve: resolve("./public"),
-    tree: dirtree(process.cwd()),
-  })
+  const tree = dirtree(process.cwd(), { exclude: /node_modules/ })
+  const files = []
+
+  const aggregate = (obj: any) => {
+    files.push(obj.path)
+    if (obj.children) obj.children.forEach(aggregate)
+  }
+
+  aggregate(tree)
+
+  res.status(200).send(files.join("\n"))
 
   /*if (req.method !== "GET") return res.status(405).end()
 
