@@ -24,24 +24,10 @@ export const EclipseDetails = () => {
 
   const eclipseDetails = useMemo(() => {
     const ottawa: Observer = {
-      latitude: {
-        degrees: 45,
-        minutes: 25,
-        seconds: 0,
-        direction: "N",
-      },
-      longitude: {
-        degrees: 75,
-        minutes: 42,
-        seconds: 0,
-        direction: "W",
-      },
+      latitude: 45.424722,
+      longitude: -75.695,
       altitude: 114,
-      timezone: {
-        hours: 4,
-        minutes: 0,
-        direction: "W",
-      },
+      timezone: -4,
     }
 
     return getEclipseDetails(eclipse, ottawa)

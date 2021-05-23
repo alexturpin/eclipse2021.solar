@@ -1,25 +1,10 @@
 // TODO: refactor with functional programming (e.g. no more globals) & camel cased functions
 
 export type Observer = {
-  latitude: {
-    // TODO decimal degrees
-    degrees: number
-    minutes: number
-    seconds: number
-    direction: "N" | "S"
-  }
-  longitude: {
-    degrees: number
-    minutes: number
-    seconds: number
-    direction: "W" | "E"
-  }
+  latitude: number
+  longitude: number
   altitude: number
-  timezone: {
-    hours: number
-    minutes: number
-    direction: "W" | "E"
-  }
+  timezone: number
 }
 
 export type Eclipse = number[]
@@ -78,14 +63,6 @@ export type EclipseCircumstances = number[]
   (40) event visibility
       (0 = above horizon, 1 = below horizon, 2 = sunrise, 3 = sunset, 4 = below horizon, disregard)
 */
-
-const directions = {
-  // TODO deprecate
-  N: 1,
-  S: -1,
-  W: 1,
-  E: -1,
-}
 
 export enum EclipseType {
   None,
@@ -654,28 +631,16 @@ function getall(elements: Eclipse) {
 // Read the data that's in the form, and populate the obsvconst array
 function setObserver(observer: Observer) {
   // Get the latitude
-  obsvconst[0] =
-    observer.latitude.degrees +
-    observer.latitude.minutes / 60.0 +
-    observer.latitude.seconds / 3600.0
-  obsvconst[0] = obsvconst[0] * directions[observer.latitude.direction]
-  obsvconst[0] = (obsvconst[0] * Math.PI) / 180.0
+  obsvconst[0] = (observer.latitude * Math.PI) / 180.0
 
   // Get the longitude
-  obsvconst[1] =
-    observer.longitude.degrees +
-    observer.longitude.minutes / 60.0 +
-    observer.longitude.seconds / 3600.0
-  obsvconst[1] = obsvconst[1] * directions[observer.longitude.direction]
-  obsvconst[1] = (obsvconst[1] * Math.PI) / 180.0
+  obsvconst[1] = (-observer.longitude * Math.PI) / 180.0
 
   // Get the altitude
   obsvconst[2] = observer.altitude
 
   // Get the time zone
-  obsvconst[3] = observer.timezone.minutes
-  obsvconst[3] = observer.timezone.hours + obsvconst[3] / 60.0
-  obsvconst[3] = directions[observer.timezone.direction] * obsvconst[3]
+  obsvconst[3] = -observer.timezone
 
   // Get the observer's geocentric position
   const tmp = Math.atan(0.99664719 * Math.tan(obsvconst[0]))
