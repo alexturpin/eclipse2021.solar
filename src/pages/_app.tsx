@@ -1,8 +1,12 @@
+import React from "react"
 import type { AppProps } from "next/app"
 import Head from "next/head"
 import "tailwindcss/tailwind.css"
 import "../styles/globals.css"
 import { appWithTranslation } from "next-i18next"
+import { Bugsnag } from "../lib/bugsnag"
+
+const ErrorBoundary = Bugsnag.getPlugin("react")?.createErrorBoundary(React)
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -28,7 +32,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:url" content={process.env.NEXT_PUBLIC_DOMAIN} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Component {...pageProps} />
+      {ErrorBoundary ? (
+        <ErrorBoundary>
+          <Component {...pageProps} />
+        </ErrorBoundary>
+      ) : (
+        <Component {...pageProps} />
+      )}
     </>
   )
 }
