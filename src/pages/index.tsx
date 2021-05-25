@@ -1,11 +1,11 @@
 import { GetStaticProps } from "next"
 import Head from "next/head"
 import { Header, Info, Shop } from "../components"
-import { getProducts, Product } from "../shop/shopify"
+import { getProducts, Product } from "../lib/shopify"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { i18n } from "../../next-i18next.config"
 import { useTranslation } from "next-i18next"
-import { Locale } from "../shop/utils"
+import { Locale } from "../lib/utils"
 
 type ShopProps = {
   products: Product[]
