@@ -7,12 +7,12 @@
   "intro-3": "Get our glasses specially designed to admire the transition of the Moon between the Sun and the Earth. Our glasses are compliant with the ISO 12312-2 international safety standard for safely viewing our local star in all its splendor.",
 
   "what": "What",
-  "what-details": "<p>In the early morning hours of June 10, 2021, a <strong>solar eclipse</strong> will be visible from across Eastern Canada.</p><p>This <strong>rare astronomical experience</strong> seldom happens in the same place. For Eastern Canadians, this coming eclipse will cover most of the sun, making for a spectacular sight!</p>",
+  "what-details": "<p>In the early morning hours of <strong>June 10, 2021</strong>, a <strong>solar eclipse</strong> will be visible from across Eastern Canada.</p><p>This <strong>rare astronomical experience</strong> seldom happens in the same place. For Eastern Canadians, this coming eclipse will cover most of the sun, making for a spectacular sight!</p>",
 
   "where-when": "Where / When",
-  "where-when-not": "Unfortunately, the eclipse <strong>will not be visible</strong> from <strong>{{location}}</strong>.",
-  "where-when-annular": "An <strong>annular</strong> eclipse <strong>will be visible</strong> from <strong>{{location}}</strong>!",
-  "where-when-partial": "A <strong>partial</strong> eclipse <strong>will be visible</strong> from <strong>{{location}}</strong>!",
+  "where-when-not": "Unfortunately, the eclipse will not be <strong>visible</strong> from <strong>{{location}}</strong>.",
+  "where-when-annular": "An <strong>annular</strong> eclipse will be <strong>visible</strong> from <strong>{{location}}</strong>!",
+  "where-when-partial": "A <strong>partial</strong> eclipse will be <strong>visible</strong> from <strong>{{location}}</strong>!",
   "where-when-c1": "First contact, when the moon starts transiting across the sun from {{location}}, will be at <strong>{{start}}</strong> on June 10.",
   "where-when-c1-sunrise": "You'll be able to witness the eclipse from {{location}} on June 10 as soon as the sun starts rising at <strong>{{start}}</strong>!",
   "where-when-c2-annular": "At <strong>{{start}}</strong>, {{location}} residents will be some of the lucky few to see the eclipse become annular! Annularity will last <strong>{{duration}}</strong>, or until {{finish}}.",

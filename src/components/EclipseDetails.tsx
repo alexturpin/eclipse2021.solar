@@ -8,7 +8,7 @@ import { useRouter } from "next/dist/client/router"
 // TODO total, sunset
 
 const Detail = ({ children }: { children: React.ReactNode }) => (
-  <h3 className="font-normal text-xl pb-4">{children}</h3>
+  <h3 className="font-normal pb-4">{children}</h3>
 )
 
 type Location = {
