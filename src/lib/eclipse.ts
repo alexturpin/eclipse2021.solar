@@ -640,7 +640,7 @@ function setObserver(observer: Observer) {
   obsvconst[2] = observer.altitude ?? 0
 
   // Get the time zone
-  obsvconst[3] = -observer.timezone
+  obsvconst[3] = observer.timezone / 60
 
   // Get the observer's geocentric position
   const tmp = Math.atan(0.99664719 * Math.tan(obsvconst[0]))

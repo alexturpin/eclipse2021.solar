@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-
 import geoip from "fast-geoip"
+import { findTimeZone, getZonedTime } from "timezone-support"
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -17,12 +17,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (Array.isArray(ip)) ip = ip[0]
   if (!ip) return res.status(400).end()
 
-  const data = await geoip.lookup(ip)
-  if (!data) {
+  const ipInfo = await geoip.lookup(ip)
+  if (!ipInfo) {
     return res.status(404).end()
   }
 
-  return res.status(200).json(data)
+  const eventDate = new Date(2021, 5, 10)
+  const tz = findTimeZone(ipInfo.timezone)
+  const timezoneInfo = getZonedTime(eventDate, tz)
+
+  return res.status(200).json({
+    city: ipInfo.city,
+    region: ipInfo.region,
+    timezone: timezoneInfo.zone,
+    ll: ipInfo.ll,
+  })
 }
 
 export default handler

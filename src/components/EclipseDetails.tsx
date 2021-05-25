@@ -14,7 +14,10 @@ const Detail = ({ children }: { children: React.ReactNode }) => (
 type Location = {
   city?: string
   region?: string
-  timezone?: string
+  timezone?: {
+    abbreviation: string
+    offset: number
+  }
   ll: [number, number]
 }
 
@@ -51,7 +54,7 @@ export const EclipseDetails = () => {
     return getEclipseDetails(eclipse, {
       latitude: location.ll[0],
       longitude: location.ll[1],
-      timezone: -4,
+      timezone: location.timezone?.offset || 240, // ET default
     })
   }, [location])
 
@@ -101,7 +104,11 @@ export const EclipseDetails = () => {
                   ? "where-when-c1-sunrise"
                   : "where-when-c1"
               }
-              values={{ start: eclipseDetails.c1?.time, location: city }}
+              values={{
+                start: eclipseDetails.c1?.time,
+                location: city,
+                timezone: location.timezone?.abbreviation,
+              }}
             />
           </Detail>
 
