@@ -33,6 +33,11 @@ body {
   @apply text-yellow;
 }
 
+.eclipse-details em {
+  @apply not-italic;
+  @apply font-bold;
+}
+
 .eclipse-details p {
   @apply pb-4;
 }

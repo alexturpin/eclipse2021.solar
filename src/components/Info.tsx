@@ -26,6 +26,7 @@ export const Info = () => {
               rel="noreferrer"
             />
           ),
+          em: <em />,
         }}
       />
     </div>
