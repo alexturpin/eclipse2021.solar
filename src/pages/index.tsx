@@ -34,6 +34,11 @@ const Home = ({ products }: ShopProps) => {
       <Header />
       <Info />
       <Shop product={products[0]} />
+      <footer className="text-center text-sm mt-14">
+        © 2021 eclipse2021.solar&nbsp;⸱&nbsp;
+        <a href="mailto:contact@eclipse2021.solar">contact@eclipse2021.solar</a>
+        &nbsp;⸱&nbsp;Eclipse Predictions by Fred Espenak (NASA's GSFC)
+      </footer>
     </>
   )
 }
