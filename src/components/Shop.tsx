@@ -6,6 +6,7 @@ import { Quantity } from "./Quantity"
 import { Checkout } from "./Checkout"
 import { useTranslation } from "next-i18next"
 import { Heading } from "./Heading"
+import { event } from "../lib/ga"
 
 const MIN_ITEMS = 2
 const MAX_ITEMS = 10
@@ -22,11 +23,11 @@ export const Shop = ({ product }: ShopProps) => {
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const checkout = async () => {
     setCheckoutLoading(true)
-    const checkoutURL = await getCheckoutURL(
-      product.id,
-      Math.min(Math.max(quantity, MIN_ITEMS), MAX_ITEMS),
-      i18n.language as Locale
-    )
+
+    const clampedQuantity = Math.min(Math.max(quantity, MIN_ITEMS), MAX_ITEMS)
+    const checkoutURL = await getCheckoutURL(product.id, quantity, i18n.language as Locale)
+
+    event("checkout", { quantity: clampedQuantity })
     window.location = checkoutURL
   }
 

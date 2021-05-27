@@ -7,7 +7,7 @@
   "intro-3": "Obtenez nos lunettes spécialement conçues pour admirer la transition de la Lune entre le Soleil et la Terre. Nos lunettes sont conformes aux normes de sécurité internationale ISO 12312-2 pour voir en toute sécurité notre étoile locale dans toute sa splendeur.",
 
   "what": "Quoi",
-  "what-details": "<p>Le matin du <strong>10 juin 2021</strong>, une éclipse solaire sera visible de tout l'est du Canada. Cette expérience astronomique rare se produit rarement au même endroit. Pour les Canadiens de l'Est, cette éclipse couvrira la majeure partie du soleil, ce qui en fera une expérience spectaculaire!</p>",
+  "what-details": "<p>Le matin du <strong>10 juin 2021</strong>, une éclipse solaire sera visible de tout l'est du Canada. Cette expérience astronomique se produit rarement au même endroit. Pour les Canadiens de l'Est, cette éclipse couvrira la majeure partie du soleil, ce qui en fera une expérience spectaculaire!</p>",
 
   "where-when": "Où / Quand",
   "where-when-not": "Malheureusement, l'éclipse ne sera pas <strong>visible</strong> de <strong>{{location}}</strong>.",
