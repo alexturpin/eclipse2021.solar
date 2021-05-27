@@ -7,3 +7,5 @@ export type Location = {
   }
   ll: [number, number]
 }
+
+export type Locale = "en-CA" | "fr-CA"

@@ -3,21 +3,22 @@ import Head from "next/head"
 import { Header, Info, Shop } from "../components"
 import { getProducts, Product } from "../lib/shopify"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { i18n } from "../../next-i18next.config"
 import { useTranslation } from "next-i18next"
-import { Locale } from "../lib/utils"
+import { Locale } from "../lib/types"
 import { FAQ } from "../components/FAQ"
+import { normalizeLocale } from "../lib/utils"
 
 type ShopProps = {
   products: Product[]
 }
 
-export const getStaticProps: GetStaticProps<ShopProps> = async ({ locale }) => {
+export const getStaticProps: GetStaticProps<ShopProps> = async ({ locale: rawLocale }) => {
+  const locale = normalizeLocale(rawLocale)
   return {
     props: {
       products: await getProducts(locale as Locale),
-      ...(await serverSideTranslations(locale ?? i18n.defaultLocale)),
-      locale: locale ?? i18n.defaultLocale,
+      ...(await serverSideTranslations(locale)),
+      locale: locale,
     },
   }
 }

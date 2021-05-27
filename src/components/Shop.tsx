@@ -1,12 +1,13 @@
 import Image from "next/image"
 import { useState } from "react"
-import { formatCurrency, Locale } from "../lib/utils"
+import { formatCurrency } from "../lib/utils"
 import { getCheckoutURL, Product } from "../lib/shopify"
 import { Quantity } from "./Quantity"
 import { Checkout } from "./Checkout"
 import { useTranslation } from "next-i18next"
 import { Heading } from "./Heading"
 import { event } from "../lib/ga"
+import { Locale } from "../lib/types"
 
 const MIN_ITEMS = 2
 const MAX_ITEMS = 10

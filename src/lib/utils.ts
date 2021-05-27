@@ -1,3 +1,6 @@
+import { Locale } from "./types"
+import { i18n } from "../../next-i18next.config"
+
 export const formatCurrency = (value: number, locale: string) =>
   value
     .toLocaleString(locale, {
@@ -7,4 +10,14 @@ export const formatCurrency = (value: number, locale: string) =>
     })
     .replace(/CAD?/, "") // currencyDisplay: "narrowSymbol" not supported by iOS Safari
 
-export type Locale = "en-CA" | "fr-CA"
+const localeMap: Record<string, Locale> = {
+  en: "en-CA",
+  fr: "fr-CA",
+}
+
+const defaultLocale = i18n.defaultLocale as Locale
+
+export const normalizeLocale = (rawLocale: string | undefined): Locale => {
+  if (!rawLocale) return defaultLocale
+  return localeMap[rawLocale] ?? defaultLocale
+}

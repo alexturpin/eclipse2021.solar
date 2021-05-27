@@ -1,5 +1,5 @@
 import Client from "shopify-buy"
-import { Locale } from "./utils"
+import { Locale } from "./types"
 
 const clients = {
   "en-CA": Client.buildClient({
