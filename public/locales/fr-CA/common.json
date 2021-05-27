@@ -19,8 +19,46 @@
   "where-when-mid": "L'éclipse atteindra son point optimal, appelé maximum à <strong>{{start}}</strong>, obscurcissant <strong>{{obscursion}}%</strong> du Soleil!",
   "where-when-c4": "La Lune finiera sa transition, amenant la fin de l'éclipse à <strong>{{start}}</strong>",
   
+  "location-loading": "En recherche de votre localisation...",
+  "location-error": "Une erreur s'est produite lors de la recherche de votre localisation.",
+  "location-unknown": "Nous ne trouvons pas votre ville",
+  
+  "how": "Comment",
+  "how-details": "<p>Regarder le Soleil directement avec les yeux peut causé des <em>problèmes oculaires permanents tel que la rétinopathie ou même une perte de la vision</em>.</p><p>Le seul moyen sûr de regarder directement l'éclipse est d'utiliser des filtres solaires spéciaux. L'American Astronomical Society recommande des filtres solaires conformes à la norme ISO 12312-2 et tient à jour une <aas>liste de fournisseurs réputés</aas>.</p><p>Pour une appréciation pratique et sûre de l'éclipse, vous pouvez acheter des lunettes fabriquées par l'un des vendeurs directement sur ce site Web. Consultez notre FAQ ci-dessous.</p>",
+  
   "shop": "Boutique",
   "subtotal": "Sous-total",
   "checkout": "Acheter",
   "processing": "Chargement"
+  
+"faq-sunglasses-question": "Puis-je utiliser des lunettes de soleil régulières pour regarder une éclipse solaire?",
+"faq-sunglasses-answer": "Non. Les lunettes de soleil, même celles dont la teinte est très foncée, <em>ne constituent pas une protection suffisante</em>. Protégez vos yeux en utilisant des <em>lunettes pour éclipses solaires approuvées</em> qui respectent la <aas>norme internationale ISO 12312-2</aas>. Vérifiez que les verres ne sont pas endommagés ou égratignés avant de les utiliser.",
+  
+"faq-glasses-work-question": "Comment fonctionnent les lunettes pour éclipses solaires?",
+"faq-glasses-work-answer": "Les lunettes de soleil régulières ne bloquent que 10 à 20 pourcent des rayons ultraviolets et de la lumière du jour. Les lunettes pour éclipses solaires sont 100 000 fois plus sombres que les lunettes régulières. Les lentilles sont fait d'un polymer noir, une résine flexible infusée aux particules de carbone. Elles vous offrent ainsi une protection totale des rayons ultraviolets et presque toute luminosité.",
+  
+"faq-no-glasses-question": "Que se passerait-il si je n’utilisais pas des lunettes pour éclipses solaires?",
+"faq-no-glasses-answer": "Fixer le soleil sans protection risque de causer une affection à la rétine qui peut l'endommager de façon permanente. Prenez rendez-vous immédiatement chez votre optométriste en cas d’accident.",
+  
+"faq-glasses-trust": "Les lunettes d'éclipse solaire venduent sur ce site sont-elles sûres à utiliser?",
+"faq-glasses-trust-answer": "Oui. Les lunettes ont été fabriquées par Jaxy Optical Instrument Co., Ltd., un fabricant figurant sur la <aas> liste des fournisseurs réputés d'AAS </aas>. Ils sont certifiés conformes à la norme internationale ISO-12312-2.",
+  
+"faq-special-question": "Qu'est-ce qui rend cette éclipse spéciale?",
+"faq-special-answer": "Une éclipse solaire, même partielle, est un événement très rare qui ne se reproduit que quelques fois sur la Terre chaque année. Pour permettre cette expérience, le Soleil et la Lune doivent être alignés dans le ciel malgré des orbites différents. Ce sera peut-être votre seule opportunité d'assister à un tel spectacle.",
+  
+"faq-expect-question": "À quoi s'attendre lors de l'éclipse solaire?",
+"faq-expect-answer": "Lorsque l'éclipse atteint son maximum, c'est là que la magie se déroule. En plein jour, le ciel s'assombrit au point qu'il semble faire nuit soudainement. Un des effets les plus impressionant est le silence soudain de la nature. Les insectes et animaux réagissent à cette noirceur en assumant que la nuit tombe et les chants et sifflement s'éteignent jusqu'à la fin de l'éclipse.",
+  
+"faq-memorable-question": "Comment rendre cet expérience mémorable?",
+"faq-memorable-answer": "Chaque éclipse est unique. Vous pouvez immortaliser ce moment de plusieurs façons. Invitez votre famille ou des amis à venir la voir avez vous. Vous pouvez vous joindre à des groupes d'astronomes amateurs pour en apprendre encore plus. Pourquoi pas une capsule temporelle que vous pouvez ouvrir lors de la prochaine éclipse de 2024? C'est un moment spécial qui vous marquera probablement toute votre vie!",
+  
+"faq-cloudy-question": "Quoi faire si le temps est nuageux?",
+"faq-cloudy-answer": "Il peut arriver que la météo ne soit pas clémente pour apprécier l'éclipse. Si c'est le cas dans votre région, ne vous en faites pas! Même si vous ne pouvez pas voir directement l'éclipse, plusieurs phénomènes sont quand même présents tels que l'assombrissement du ciel, la baisse de température et le changement de comportement de la faune autour.",
+  
+"faq-photograph-question": "Puis-je photographier l'éclipse solaire?",
+"faq-photograph-answer": "Vous aurez besoin d'un filtre solaire pour ne pas endommager, voir complètement ruiner votre caméra. Il est possible de prendre des photos sans filtre seulement lors d'une éclipse solaire totale quand elle atteint son maximum et que le Soleil est complètement couvert.",
+  
+"faq-who-question": "Qui sommes-nous?",
+"faq-who-answer": "Nous sommes un petit groupe d'amis passionnés par l'espace et souhaitant partager cette passion avec les autres! Si vous avez une question ou des commentaires pour nous, n'hésitez pas à nous contacter par courriel à <contact> contact@eclipse2021.solar </contact>."
 }
+
