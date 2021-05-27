@@ -29,5 +29,26 @@
   "shop": "Shop",
   "subtotal": "Subtotal",
   "checkout": "Checkout",
-  "processing": "Processing"
+  "processing": "Processing",
+
+  "faq-sunglasses-question": "Can I use regular sunglasses to watch a solar eclipse?",
+  "faq-sunglasses-answer": "No. Sunglasses, even those with a very dark tint, <em>are not sufficient</em> protection. Protect your eyes at all times by using <em>approved solar eclipse</em> glasses that meet <aas>ISO 12312-2 international standard</aas>. Check the glasses for damage or scratches before using them.",
+  "faq-glasses-work-question": "How do solar eclipse glasses work?",
+  "faq-glasses-work-answer": "Regular sunglasses block only 10 to 20 percent of UV rays and daylight. Solar eclipse glasses are 100,000 times darker than regular glasses. The lenses are made of a black polymer, a flexible resin infused with carbon particles. They offer you total protection from ultraviolet rays and almost any light.",
+  "faq-no-glasses-question": "What if I didn't use solar eclipse glasses",
+  "faq-no-glasses-answer": "Staring at the sun without protection risks causing damage to the retina that can permanently damage it. Make an appointment immediately with your optometrist in the event of an accident.",
+  "faq-glasses-trust": "Are the eclipse glasses sold on this website safe?",
+  "faq-glasses-trust-answer": "Yes. The glasses were manufactured by Jaxy Optical Instrument Co., Ltd., a manufacturer listed on the <aas>AAS' reputable vendors list</aas>. They are certified to meet the ISO-12312-2 international standard.",
+  "faq-special-question": "What makes this eclipse special?",
+  "faq-special-answer": "A solar eclipse, even a partial one, is a very rare event that only happens a few times on Earth each year. To enable this experiment, the Sun and the Moon must be aligned in the sky despite different orbits. This might be your only chance to witness such a spectacle.",
+  "faq-expect-question": "What to expect during the solar eclipse?",
+  "faq-expect-answer": "When the eclipse reaches its peak, this is where the magic happens. In broad daylight, the sky darkens to the point that it suddenly seems dark. One of the most impressive effects is the sudden silence of nature. Insects and animals react to this darkness by assuming that night is falling and the songs and whistles die off until the end of the eclipse.",
+  "faq-memorable-question": "How to make this experience memorable?",
+  "faq-memorable-answer": "Each eclipse is unique. There are several ways you can immortalize this moment. Invite your family or friends to come and see her. You can join groups of amateur astronomers to learn even more. How about a time capsule that you can open during the next eclipse in 2024? It is a special moment that will probably mark you for the rest of your life!",
+  "faq-cloudy-question": "What if it's cloudy during the eclipse?",
+  "faq-cloudy-answer": "It may happen that the weather is not optimal to appreciate the eclipse. If this is the case in your area, don't worry! Even if you cannot see the eclipse directly, several phenomena are still present such as the darkening of the sky, the drop in temperature and the change in behavior of the fauna around.",
+  "faq-photograph-question": "Can I photograph the solar eclipse?",
+  "faq-photograph-answer": "You will need a solar filter in order not to damage, or even completely ruin, your camera. It is only possible to take unfiltered photos during a total solar eclipse when it is at its maximum and the Sun is completely covered.",
+  "faq-who-question": "Who is behind this website?",
+  "faq-who-answer": "We're a small group of friends who are into space stuff and want to share that passion with others! If you have a question or some feedback for us, feel free to send us an email at <contact>contact@eclipse2021.solar</contact>."
 }

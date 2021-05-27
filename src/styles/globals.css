@@ -33,7 +33,8 @@ body {
   @apply text-yellow;
 }
 
-.eclipse-details em {
+.eclipse-details em,
+.faq em {
   @apply not-italic;
   @apply font-bold;
 }

@@ -80,9 +80,7 @@ export const Shop = ({ product }: ShopProps) => {
         </div>
       </div>
 
-      <div className="flex flex-row-reverse">
-        <Checkout onCheckout={checkout} loading={checkoutLoading} />
-      </div>
+      <Checkout onCheckout={checkout} loading={checkoutLoading} />
     </div>
   )
 }
