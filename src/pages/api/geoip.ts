@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import geoip from "fast-geoip"
 import { findTimeZone, getZonedTime } from "timezone-support"
+import { Location } from "../../lib/types"
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Location>) => {
   if (process.env.FAKE_LAG) {
     await sleep(parseInt(process.env.FAKE_LAG))
   }

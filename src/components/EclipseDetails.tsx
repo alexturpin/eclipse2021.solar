@@ -1,9 +1,10 @@
 import { EclipseType, EventVisibility, getEclipseDetails } from "../lib/eclipse"
 import eclipse from "../lib/2021-06-10.json"
-import { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { useTranslation, Trans } from "next-i18next"
 import { SpinnerIcon } from "./SpinnerIcon"
 import { useRouter } from "next/dist/client/router"
+import { Location } from "../lib/types"
 
 // TODO total, sunset
 
@@ -11,15 +12,19 @@ const Detail = ({ children }: { children: React.ReactNode }) => (
   <h3 className="font-normal pb-4">{children}</h3>
 )
 
-type Location = {
-  city?: string
-  region?: string
-  timezone?: {
-    abbreviation: string
-    offset: number
-  }
-  ll: [number, number]
-}
+const DetectLocationIcon = (props: React.ComponentProps<"svg">) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" {...props}>
+    <path d="M0 0h48v48h-48z" fill="none" />
+    <path d="M24 16c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm17.88 6c-.92-8.34-7.54-14.96-15.88-15.88v-4.12h-4v4.12c-8.34.92-14.96 7.54-15.88 15.88h-4.12v4h4.12c.92 8.34 7.54 14.96 15.88 15.88v4.12h4v-4.12c8.34-.92 14.96-7.54 15.88-15.88h4.12v-4h-4.12zm-17.88 16c-7.73 0-14-6.27-14-14s6.27-14 14-14 14 6.27 14 14-6.27 14-14 14z" />
+  </svg>
+)
+
+const DetectLocation = ({ onClick }: { onClick: () => void }) =>
+  navigator.geolocation && (
+    <button type="button" onClick={onClick}>
+      <DetectLocationIcon className="h-6 text-yellow inline relative -top-0.5" />
+    </button>
+  )
 
 export const EclipseDetails = () => {
   const { query } = useRouter()
@@ -58,6 +63,17 @@ export const EclipseDetails = () => {
     })
   }, [location])
 
+  const detectLocation = () => {
+    console.log("hi?")
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const lat = encodeURIComponent(position.coords.latitude)
+      const long = encodeURIComponent(position.coords.longitude)
+
+      const res = await fetch(`/api/latlong?lat=${lat}&long=${long}`)
+      if (res.ok) setLocation(await res.json())
+    })
+  }
+
   const { t } = useTranslation()
 
   if (!location) {
@@ -80,7 +96,11 @@ export const EclipseDetails = () => {
     <>
       {eclipseDetails.type === EclipseType.None && (
         <Detail>
-          <Trans i18nKey="where-when-not" values={{ location: cityRegion }} />
+          <Trans
+            i18nKey="where-when-not"
+            values={{ location: cityRegion }}
+            components={{ detectLocation: <DetectLocation onClick={detectLocation} /> }}
+          />
         </Detail>
       )}
 
@@ -88,12 +108,20 @@ export const EclipseDetails = () => {
         <>
           {eclipseDetails.type === EclipseType.Annular && (
             <Detail>
-              <Trans i18nKey="where-when-annular" values={{ location: cityRegion }} />
+              <Trans
+                i18nKey="where-when-annular"
+                values={{ location: cityRegion }}
+                components={{ detectLocation: <DetectLocation onClick={detectLocation} /> }}
+              />
             </Detail>
           )}
           {eclipseDetails.type === EclipseType.Partial && (
             <Detail>
-              <Trans i18nKey="where-when-partial" values={{ location: cityRegion }} />
+              <Trans
+                i18nKey="where-when-partial"
+                values={{ location: cityRegion }}
+                components={{ detectLocation: <DetectLocation onClick={detectLocation} /> }}
+              />
             </Detail>
           )}
 
