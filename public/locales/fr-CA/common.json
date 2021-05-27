@@ -7,6 +7,18 @@
   "intro-3": "Obtenez nos lunettes spécialement conçues pour admirer la transition de la Lune entre le Soleil et la Terre. Nos lunettes sont conformes aux normes de sécurité internationale ISO 12312-2 pour voir en toute sécurité notre étoile locale dans toute sa splendeur.",
 
   "what": "Quoi",
+  "what-details": "<p>Le matin du <strong>10 juin 2021</strong>, une éclipse solaire sera visible de tout l'est du Canada. Cette expérience astronomique rare se produit rarement au même endroit. Pour les Canadiens de l'Est, cette éclipse couvrira la majeure partie du soleil, ce qui en fera une expérience spectaculaire!</p>",
+  
+  "where-when": "Où / Quand",
+  "where-when-not": "Malheureusement, l'éclipse ne sera pas <strong>visible</strong> de <strong>{{location}}</strong>.",
+  "where-when-annular": "Une éclipse <strong>annulaire</strong> sera <strong>visible</strong> de <strong>{{location}}</strong>!",
+  "where-when-partial": "Une éclipse <strong>partielle</strong> sera <strong>visible</strong> de <strong>{{location}}</strong>!",
+  "where-when-c1": "La Lune commencera sa transition devant le Soleil dans la région de {{location}} à <strong>{{start}}</strong> {{timezone}} le 10 juin.",
+  "where-when-c1-sunrise": "Vous pourrez assister à cette éclipse dans la région de {{location}} le 10 juin au levé du soleil prévu à <strong>{{start}}</strong> {{timezone}}!",
+  "where-when-c2-annular": "À <strong>{{start}}</strong>, les résidents de {{location}} auront la rare chance de pouvoir assister à une éclipse annulaire! Cette éclipse durera <strong>{{duration}}</strong> ou jusqu'à {{finish}}.",
+  "where-when-mid": "L'éclipse atteindra son point optimal, appelé maximum à <strong>{{start}}</strong>, obscurcissant <strong>{{obscursion}}%</strong> du Soleil!",
+  "where-when-c4": "La Lune finiera sa transition, amenant la fin de l'éclipse à <strong>{{start}}</strong>",
+  
   "shop": "Boutique",
   "subtotal": "Sous-total",
   "checkout": "Acheter",
