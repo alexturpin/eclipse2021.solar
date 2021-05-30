@@ -64,7 +64,6 @@ export const EclipseDetails = () => {
   }, [location])
 
   const detectLocation = () => {
-    console.log("hi?")
     navigator.geolocation.getCurrentPosition(async (position) => {
       const lat = encodeURIComponent(position.coords.latitude)
       const long = encodeURIComponent(position.coords.longitude)
