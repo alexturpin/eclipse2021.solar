@@ -1,7 +1,7 @@
 import { useTranslation } from "next-i18next"
 import Link from "next/link"
 
-export const LangSwitcher = () => {
+export const LocaleSwitcher = () => {
   const { i18n } = useTranslation()
 
   return (
