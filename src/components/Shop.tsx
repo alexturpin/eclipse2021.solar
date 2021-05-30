@@ -1,8 +1,7 @@
 import Image from "next/image"
 import { useState } from "react"
-import { formatCurrency } from "../lib/utils"
 import { getCheckoutURL, Product } from "../lib/shopify"
-import { Quantity, Checkout, Heading } from "./"
+import { Quantity, Checkout, Heading, NumberDisplay } from "./"
 import { useTranslation } from "next-i18next"
 import { event } from "../lib/ga"
 import { Locale } from "../lib/types"
@@ -58,7 +57,7 @@ export const Shop = ({ product }: ShopProps) => {
           </div>
           <div className="pb-5 md:pb-0 md:py-0">
             <span className="text-center text-yellow font-bold text-2xl md:text-sm">
-              {formatCurrency(product.price, i18n.language)}
+              <NumberDisplay value={product.price} />
             </span>
           </div>
           <div className="pb-5 md:pb-0">
@@ -75,7 +74,7 @@ export const Shop = ({ product }: ShopProps) => {
           <span className="uppercase font-semibold">{t("subtotal")}</span>
 
           <span className="text-yellow font-bold">
-            {formatCurrency(quantity * product.price, i18n.language)}
+            <NumberDisplay value={quantity * product.price} />
           </span>
         </div>
       </div>
