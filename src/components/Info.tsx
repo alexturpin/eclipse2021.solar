@@ -1,6 +1,5 @@
 import { useTranslation, Trans } from "next-i18next"
-import { EclipseDetails } from "./EclipseDetails"
-import { Heading } from "./Heading"
+import { Heading, EclipseDetails } from "./"
 
 export const Info = () => {
   const { t } = useTranslation()

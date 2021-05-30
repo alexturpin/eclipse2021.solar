@@ -2,7 +2,7 @@ import { EclipseType, EventVisibility, getEclipseDetails } from "../lib/eclipse"
 import eclipse from "../lib/2021-06-10.json"
 import React, { useEffect, useMemo, useState } from "react"
 import { useTranslation, Trans } from "next-i18next"
-import { SpinnerIcon } from "./SpinnerIcon"
+import { SpinnerIcon } from "./"
 import { useRouter } from "next/dist/client/router"
 import { Location } from "../lib/types"
 

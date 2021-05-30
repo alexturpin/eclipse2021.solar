@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next"
-import { SpinnerIcon } from "./SpinnerIcon"
+import { SpinnerIcon } from "./"
 
 type CheckoutProps = {
   onCheckout: () => Promise<void>

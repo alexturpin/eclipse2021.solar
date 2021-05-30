@@ -1,7 +1,7 @@
 import { Disclosure } from "@headlessui/react"
 import { ChevronDownIcon } from "@heroicons/react/outline"
 import { useTranslation, Trans } from "next-i18next"
-import { Heading } from "./Heading"
+import { Heading } from "./"
 
 const faqs = [
   "faq-sunglasses",

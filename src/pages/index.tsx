@@ -5,7 +5,7 @@ import { getProducts, Product } from "../lib/shopify"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useTranslation } from "next-i18next"
 import { Locale } from "../lib/types"
-import { FAQ } from "../components/FAQ"
+import { FAQ } from "../components"
 import { normalizeLocale } from "../lib/utils"
 
 type ShopProps = {
