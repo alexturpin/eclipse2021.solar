@@ -11,6 +11,8 @@ export const formatCurrency = (value: number, locale: string) =>
     .replace(/CAD?/, "") // currencyDisplay: "narrowSymbol" not supported by iOS Safari
 
 const localeMap: Record<string, Locale> = {
+  "en-CA": "en-CA",
+  "fr-CA": "fr-CA",
   en: "en-CA",
   fr: "fr-CA",
 }
