@@ -31,14 +31,20 @@ export const EclipseDetails = () => {
   const [location, setLocation] = useState<Location | null>(null)
   const [error, setError] = useState(false)
 
+  const fetchLocationLatLong = async (latitude: number | string, longitude: number | string) => {
+    const lat = encodeURIComponent(latitude)
+    const long = encodeURIComponent(longitude)
+
+    const res = await fetch(`/api/latlong?lat=${lat}&long=${long}`)
+    if (res.ok) setLocation(await res.json())
+  }
+
   useEffect(() => {
     let isSubscribed = true
 
     if (query.lat && query.long) {
       // Debug override
-      setLocation({
-        ll: [parseFloat(query.lat as string), parseFloat(query.long as string)],
-      })
+      fetchLocationLatLong(query.lat as string, query.long as string)
     } else {
       // Geo IP fetch
       const getLocation = async () => {
@@ -65,11 +71,7 @@ export const EclipseDetails = () => {
 
   const detectLocation = () => {
     navigator.geolocation.getCurrentPosition(async (position) => {
-      const lat = encodeURIComponent(position.coords.latitude)
-      const long = encodeURIComponent(position.coords.longitude)
-
-      const res = await fetch(`/api/latlong?lat=${lat}&long=${long}`)
-      if (res.ok) setLocation(await res.json())
+      fetchLocationLatLong(position.coords.latitude, position.coords.longitude)
     })
   }
 
