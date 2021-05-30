@@ -24,7 +24,7 @@ export const FAQ = () => {
 
   return (
     <div className="faq container mx-auto px-6 md:px-2">
-      <Heading>Frequently asked questions</Heading>
+      <Heading>{t("faq")}</Heading>
       <dl className="space-y-6 divide-y">
         {faqs.map((faq) => (
           <Disclosure as="div" key={faq} className="pt-6">
