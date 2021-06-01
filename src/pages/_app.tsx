@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         src={`/images/${i18n.language}/eclipse.png`}
         <meta
           property="og:image"
-          content={`https://${process.env.NEXT_PUBLIC_DOMAIN}/images/${i18n.language}/eclipse.png`}
+          content={`https://${process.env.NEXT_PUBLIC_DOMAIN}/images/${i18n.language}/social.png`}
         />
         <meta property="og:url" content={`https://${process.env.NEXT_PUBLIC_DOMAIN}`} />
         <meta name="twitter:card" content="summary_large_image" />
