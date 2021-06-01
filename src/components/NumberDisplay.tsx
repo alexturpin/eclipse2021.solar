@@ -8,6 +8,7 @@ export const NumberDisplay = ({ value }: { value: number }) => {
     return (
       <NumberFormat
         value={value}
+        decimalScale={2}
         thousandSeparator=" "
         decimalSeparator=","
         suffix=" $"
@@ -18,6 +19,7 @@ export const NumberDisplay = ({ value }: { value: number }) => {
     return (
       <NumberFormat
         value={value}
+        decimalScale={2}
         thousandSeparator=","
         decimalSeparator="."
         prefix="$"
