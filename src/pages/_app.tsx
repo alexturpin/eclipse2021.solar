@@ -41,13 +41,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           property="og:description"
           content="Find out how you can see the eclipse. Visible from Eastern Canada!"
         />
-        src={`/images/${i18n.language}/eclipse.png`}
         <meta
           property="og:image"
-          content={`https://${process.env.NEXT_PUBLIC_DOMAIN}/images/${i18n.language}/social.png`}
+          content={`https://${process.env.NEXT_PUBLIC_DOMAIN}/images/social.png`}
         />
         <meta property="og:url" content={`https://${process.env.NEXT_PUBLIC_DOMAIN}`} />
+        <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
+
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
