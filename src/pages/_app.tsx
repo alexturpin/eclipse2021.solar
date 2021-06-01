@@ -3,7 +3,7 @@ import type { AppProps } from "next/app"
 import Head from "next/head"
 import "tailwindcss/tailwind.css"
 import "../styles/globals.css"
-import { appWithTranslation } from "next-i18next"
+import { appWithTranslation, useTranslation } from "next-i18next"
 import { Bugsnag } from "../lib/bugsnag"
 import { useRouter } from "next/router"
 import { pageview } from "../lib/ga"
@@ -22,6 +22,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     return () => router.events.off("routeChangeComplete", handleRouteChange)
   }, [router.events])
 
+  const { i18n } = useTranslation()
+
   return (
     <>
       <Head>
@@ -30,21 +32,22 @@ function MyApp({ Component, pageProps }: AppProps) {
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap"
           rel="stylesheet"
         />
-
         <meta
           name="description"
           content="Find out how you can see the eclipse. Visible from Eastern Canada!"
         />
-
         <meta property="og:title" content="June 10, 2021 solar eclipse" />
         <meta
           property="og:description"
           content="Find out how you can see the eclipse. Visible from Eastern Canada!"
         />
-        <meta property="og:image" content={process.env.NEXT_PUBLIC_DOMAIN + "/eclipse.png"} />
+        src={`/images/${i18n.language}/eclipse.png`}
+        <meta
+          property="og:image"
+          content={`${process.env.NEXT_PUBLIC_DOMAIN}/images/${i18n.language}/eclipse.png`}
+        />
         <meta property="og:url" content={process.env.NEXT_PUBLIC_DOMAIN} />
         <meta name="twitter:card" content="summary_large_image" />
-
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
