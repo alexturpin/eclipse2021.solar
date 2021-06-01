@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta
           property="og:image"
-          content={`https://${process.env.NEXT_PUBLIC_DOMAIN}/images/social.png`}
+          content={`https://${process.env.NEXT_PUBLIC_DOMAIN}/images/social.jpg`}
         />
         <meta property="og:url" content={`https://${process.env.NEXT_PUBLIC_DOMAIN}`} />
         <meta property="og:type" content="website" />
