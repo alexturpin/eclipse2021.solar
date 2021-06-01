@@ -6,6 +6,7 @@ import { Heading } from "./"
 const faqs = [
   "faq-sunglasses",
   "faq-glasses-work",
+  "faq-glasses-trust",
   "faq-no-glasses",
   "faq-special",
   "faq-expect",
