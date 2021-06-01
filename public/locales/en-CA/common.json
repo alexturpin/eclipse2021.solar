@@ -11,7 +11,7 @@
   "what-details": "<p>In the early morning hours of <strong>June 10, 2021</strong>, a <strong>solar eclipse</strong> will be visible from across Eastern Canada.</p><p>This <strong>rare astronomical experience</strong> seldom happens in the same place. For Eastern Canadians, this coming eclipse will cover most of the sun, making for a spectacular sight!</p>",
 
   "where-when": "Where / When",
-  "where-when-not": "Unfortunately, the eclipse will not be visible from <strong>{{location}}</strong> <detectLocation />.",
+  "where-when-not": "Unfortunately, the eclipse will not be visible from <strong>{{location}}</strong> <detectLocation />!",
   "where-when-annular": "An <strong>annular</strong> eclipse will be visible from <strong>{{location}}</strong> <detectLocation />.",
   "where-when-partial": "A <strong>partial</strong> eclipse will be visible from <strong>{{location}}</strong> <detectLocation />.",
   "where-when-c1": "First contact, when the moon starts transiting across the sun from {{location}}, will be at <strong>{{start}}</strong> {{timezone}} on June 10.",
