@@ -32,9 +32,9 @@ const Home = ({ products }: ShopProps) => {
       <FAQ />
 
       <footer className="container mx-auto px-6 md:px-2 text-center text-sm mt-14">
-        © 2021 eclipse2021.solar&nbsp;⸱&nbsp;
+        © 2021 eclipse2021.solar&nbsp;♦&nbsp;
         <a href="mailto:contact@eclipse2021.solar">contact@eclipse2021.solar</a>
-        &nbsp;⸱&nbsp;Eclipse Predictions by Fred Espenak (NASA's GSFC)
+        &nbsp;♦&nbsp;Eclipse Predictions by Fred Espenak (NASA's GSFC)
       </footer>
     </>
   )
