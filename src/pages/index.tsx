@@ -1,9 +1,7 @@
 import { GetStaticProps } from "next"
-import Head from "next/head"
 import { Header, Info, Shop, LocaleSwitcher } from "../components"
 import { getProducts, Product } from "../lib/shopify"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useTranslation } from "next-i18next"
 import { Locale } from "../lib/types"
 import { FAQ } from "../components"
 import { normalizeLocale } from "../lib/utils"
@@ -24,16 +22,8 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ locale: rawLoc
 }
 
 const Home = ({ products }: ShopProps) => {
-  const { t } = useTranslation()
-
   return (
     <>
-      <Head>
-        <title>
-          {t("title")} — {t("date")}
-        </title>
-      </Head>
-
       <LocaleSwitcher />
 
       <Header />

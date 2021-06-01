@@ -22,25 +22,23 @@ function MyApp({ Component, pageProps }: AppProps) {
     return () => router.events.off("routeChangeComplete", handleRouteChange)
   }, [router.events])
 
-  const { i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <>
       <Head>
+        <title>
+          {t("title")} — {t("date")}
+        </title>
+
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap"
           rel="stylesheet"
         />
-        <meta
-          name="description"
-          content="Find out how you can see the eclipse. Visible from Eastern Canada!"
-        />
-        <meta property="og:title" content="June 10, 2021 solar eclipse" />
-        <meta
-          property="og:description"
-          content="Find out how you can see the eclipse. Visible from Eastern Canada!"
-        />
+        <meta name="description" content={t("description")} />
+        <meta property="og:title" content={`${t("title")} — ${t("date")}`} />
+        <meta property="og:description" content={t("description")} />
         <meta
           property="og:image"
           content={`https://${process.env.NEXT_PUBLIC_DOMAIN}/images/social.png`}
