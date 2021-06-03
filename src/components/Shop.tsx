@@ -101,9 +101,12 @@ export const ShopInactive = ({
 
     setSubmitted(true)
 
-    await supabase.from("mailing_list").insert({
-      email: email.trim(),
-    })
+    await supabase.from("mailing_list").insert(
+      {
+        email: email.trim(),
+      },
+      { returning: "minimal" } // Required if no SELECT permissions given
+    )
   }
 
   const override = (event: MouseEvent<HTMLAnchorElement>) => {
