@@ -39,6 +39,7 @@ body {
   @apply font-bold;
 }
 
-.eclipse-details p {
+.eclipse-details p,
+.shop-inactive p:first-child {
   @apply pb-4;
 }

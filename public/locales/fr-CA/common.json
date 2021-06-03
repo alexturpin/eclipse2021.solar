@@ -31,6 +31,10 @@
   "subtotal": "Sous-total",
   "checkout": "Acheter",
   "processing": "Chargement",
+  "late-details": "<p>Malheureusement, il est maintenant trop tard pour acheter et recevoir des lunettes à temps pour l'éclipse.</p><p>L'éclipse solaire totale de 2024 va être sera l'expérience d'une vie. Inscrivez-vous afin de vous faire rappeler quelques mois d'avance.</p>",
+  "late-email": "Adresse courriel",
+  "late-remind-me": "Me rappeler",
+  "late-got-it": "C'est bon",
 
   "faq": "Foire aux questions",
 

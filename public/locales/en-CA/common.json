@@ -31,6 +31,10 @@
   "subtotal": "Subtotal",
   "checkout": "Checkout",
   "processing": "Processing",
+  "late-details": "<p>Unfortunately, it is now too late to buy and receive glasses in time for the eclipse.</p><p>The total solar eclipse of 2024 is going to be bucket list worthy, once in a lifetime event. Sign up to be reminded a few months in advance.</p>",
+  "late-email": "Email address",
+  "late-remind-me": "Remind me",
+  "late-got-it": "Got it",
 
   "faq": "Frequently asked questions",
   "faq-sunglasses-question": "Can I use regular sunglasses to watch a solar eclipse?",

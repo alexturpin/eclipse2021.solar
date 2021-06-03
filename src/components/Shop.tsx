@@ -1,10 +1,11 @@
 import Image from "next/image"
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { getCheckoutURL, Product } from "../lib/shopify"
 import { Quantity, Checkout, Heading, NumberDisplay } from "./"
-import { useTranslation } from "next-i18next"
+import { Trans, useTranslation } from "next-i18next"
 import { event } from "../lib/ga"
 import { Locale } from "../lib/types"
+import { supabase } from "../lib/supabase"
 
 const MIN_ITEMS = 2
 const MAX_ITEMS = 10
@@ -83,24 +84,43 @@ export const ShopActive = ({ product }: ShopProps) => {
 }
 
 export const ShopInactive = () => {
-  return (
-    <div className="bg-purple px-5 py-5 rounded-md">
-      <p className="pb-4">
-        Unfortunately, it is now too late to buy and receive glasses in time for the eclipse.
-      </p>
-      <p>
-        The total solar eclipse of 2024 is going to be bucket list worthy, once in a lifetime event.
-        Sign up to be reminded a few months in advance.
-      </p>
+  const { t } = useTranslation()
 
-      <form>
+  const [email, setEmail] = useState("")
+  const [submitted, setSubmitted] = useState(false)
+
+  const signUp = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!email.trim().length) return
+
+    setSubmitted(true)
+
+    await supabase.from("mailing_list").insert({
+      email: email.trim(),
+    })
+  }
+
+  return (
+    <div className="shop-inactive bg-purple px-5 py-5 rounded-md">
+      <div className="">
+        <Trans i18nKey="late-details" />
+      </div>
+
+      <form onSubmit={(event) => signUp(event)}>
         <input
           type="email"
+          value={email}
+          onChange={(e) => setEmail(e.currentTarget.value)}
+          disabled={submitted}
           className="w-full md:w-1/3 py-4 px-4 mt-4 mr-2 rounded-md text-xs text-black placeholder-gray-dark"
-          placeholder="Email address"
+          placeholder={t("late-email")}
         />
-        <button className="w-full md:w-1/6 py-4 px-4 mt-4 rounded-md text-xs text-white uppercase bg-gradient-to-r from-orange to-mangenta tracking-widest">
-          Remind me
+        <button
+          type="submit"
+          disabled={submitted}
+          className="w-full md:w-1/5 py-4 px-4 mt-4 rounded-md text-xs text-white uppercase bg-gradient-to-r from-orange to-mangenta tracking-widest"
+        >
+          {submitted ? t("late-got-it") : t("late-remind-me")}
         </button>
       </form>
     </div>
