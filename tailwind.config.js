@@ -12,7 +12,10 @@ module.exports = {
         dark: "#110C1E",
       },
       black: "#000000",
-      gray: "#CECECE",
+      gray: {
+        DEFAULT: "#CECECE",
+        dark: "#555555",
+      },
     },
     container: {
       screens: {

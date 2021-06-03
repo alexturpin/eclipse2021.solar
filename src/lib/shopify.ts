@@ -23,6 +23,7 @@ export type Product = {
   description: string
   price: number
   image: string
+  available: boolean
 }
 
 export const toProduct = ({
@@ -37,6 +38,7 @@ export const toProduct = ({
   description,
   price: parseFloat(product.variants[0].price),
   image: product.images[0].src,
+  available: product.variants[0].available,
 })
 
 export const getProducts = async (locale: Locale) =>
