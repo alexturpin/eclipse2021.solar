@@ -88,7 +88,7 @@ export const ShopInactive = ({
   setOverrideActive,
 }: {
   overrideActive: boolean
-  setOverrideActive: Dispatch<SetStateAction<boolean>>
+  setOverrideActive: Dispatch<SetStateAction<boolean>> | null
 }) => {
   const { t } = useTranslation()
 
@@ -107,6 +107,8 @@ export const ShopInactive = ({
   }
 
   const override = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (!setOverrideActive) return
+
     event.preventDefault()
     setOverrideActive(true)
   }
@@ -135,7 +137,7 @@ export const ShopInactive = ({
         </button>
       </form>
 
-      {!overrideActive && (
+      {!overrideActive && setOverrideActive && (
         <div className="text-xs">
           <Trans
             i18nKey="late-override"
@@ -167,7 +169,10 @@ export const Shop = ({ product }: ShopProps) => {
       <Heading>{t("shop")}</Heading>
 
       {!active && (
-        <ShopInactive overrideActive={overrideActive} setOverrideActive={setOverrideActive} />
+        <ShopInactive
+          overrideActive={overrideActive}
+          setOverrideActive={product.available ? setOverrideActive : null}
+        />
       )}
       {(active || overrideActive) && <ShopActive product={product} />}
     </div>
