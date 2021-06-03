@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { FormEvent, useState } from "react"
+import { Dispatch, FormEvent, MouseEvent, SetStateAction, useState } from "react"
 import { getCheckoutURL, Product } from "../lib/shopify"
 import { Quantity, Checkout, Heading, NumberDisplay } from "./"
 import { Trans, useTranslation } from "next-i18next"
@@ -83,7 +83,13 @@ export const ShopActive = ({ product }: ShopProps) => {
   )
 }
 
-export const ShopInactive = () => {
+export const ShopInactive = ({
+  overrideActive,
+  setOverrideActive,
+}: {
+  overrideActive: boolean
+  setOverrideActive: Dispatch<SetStateAction<boolean>>
+}) => {
   const { t } = useTranslation()
 
   const [email, setEmail] = useState("")
@@ -100,13 +106,18 @@ export const ShopInactive = () => {
     })
   }
 
+  const override = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    setOverrideActive(true)
+  }
+
   return (
-    <div className="shop-inactive bg-purple px-5 py-5 rounded-md">
-      <div className="">
+    <div className="shop-inactive bg-purple px-5 py-5 mb-4 rounded-md">
+      <div>
         <Trans i18nKey="late-details" />
       </div>
 
-      <form onSubmit={(event) => signUp(event)}>
+      <form onSubmit={(event) => signUp(event)} className="mb-4">
         <input
           type="email"
           value={email}
@@ -123,6 +134,24 @@ export const ShopInactive = () => {
           {submitted ? t("late-got-it") : t("late-remind-me")}
         </button>
       </form>
+
+      {!overrideActive && (
+        <div className="text-xs">
+          <Trans
+            i18nKey="late-override"
+            components={{
+              override: (
+                // eslint-disable-next-line jsx-a11y/anchor-has-content
+                <a
+                  className="underline hover:no-underline"
+                  onClick={(event) => override(event)}
+                  href=""
+                />
+              ),
+            }}
+          />
+        </div>
+      )}
     </div>
   )
 }
@@ -130,14 +159,17 @@ export const ShopInactive = () => {
 export const Shop = ({ product }: ShopProps) => {
   const { t } = useTranslation()
 
+  const [overrideActive, setOverrideActive] = useState(false)
   const active = product.available && process.env.NEXT_PUBLIC_SHOP_ACTIVE === "true"
 
   return (
     <div className="container mx-auto px-6 md:px-2">
       <Heading>{t("shop")}</Heading>
 
-      {active && <ShopActive product={product} />}
-      {!active && <ShopInactive />}
+      {!active && (
+        <ShopInactive overrideActive={overrideActive} setOverrideActive={setOverrideActive} />
+      )}
+      {(active || overrideActive) && <ShopActive product={product} />}
     </div>
   )
 }
